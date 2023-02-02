@@ -11,5 +11,18 @@
 }
 
 body {
-  background-color: aliceblue;
+  background-color: darkgrey;
+}
+
+.form-input {
+  outline: none;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  padding: 4px 6px
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

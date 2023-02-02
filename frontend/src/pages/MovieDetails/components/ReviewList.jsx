@@ -1,31 +1,32 @@
-import React from "react";
+import React from 'react'
 
-export default function ReviewList({ movieId }) {
-  const [reviews, setReviews] = React.useState([]);
+import { dateFormatter } from '../../../util/dateFormatter';
 
-  React.useEffect(() => {
-    async function fetchReviews() {
-      const res = await fetch(`/api/reviews/${movieId}`);
-      const data = await res.json();
-      setReviews(data);
-    }
-    fetchReviews();
-  }, []);
+export default function ReviewList({ movieId, reviews, setReviews }) {
 
-  return (
-    <>
-      <p className="text-2xl font-semibold mb-2">Reviews</p>
-      {reviews.map((review) => (
-        <div
-          key={review._id}
-          className="rounded-lg shadow bg-white flex flex-col space-y-2 mb-4 p-4"
-        >
-          <p>{review.userName}</p>
-          <p>{review.rating}/10</p>
-          <p>{review.description}</p>
-          <p>{review.createdAt.split("T")[0]}</p>
-        </div>
-      ))}
-    </>
-  );
+    React.useEffect(() => {
+        async function fetchReviews() {
+            const res = await fetch(`/api/reviews/${movieId}`);
+            const data = await res.json();
+            setReviews(data);
+        }
+        fetchReviews()
+    }, [])
+
+    return (
+        <div>{reviews.length > 0 && <p className="text-2xl font-semibold mb-2">Reviews</p>}
+            {reviews.map((review) => (
+                <div
+                    key={review._id}
+                    className="rounded-lg shadow bg-white flex flex-col mb-4 p-4"
+                ><div className="flex items-center">
+                        <p className="font-semibold text-xl mr-2">{review.userName}</p>
+                        <p>{review.rating}/10</p></div>
+                    <p className="text-xs">{dateFormatter(review.createdAt)}</p>
+
+                    {review.description && <p className="mt-2">{review.description}</p>}
+
+                </div>
+            ))}</div>
+    )
 }

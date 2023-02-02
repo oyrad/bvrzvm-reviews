@@ -36,7 +36,9 @@ const deleteReview = asyncHandler(async (req, res) =>
 );
 
 const getReviewsByMovieId = asyncHandler(async (req, res) => {
-  const reviewsById = await Review.find({ movieId: req.params.id });
+  const reviewsById = await Review.find({ movieId: req.params.id }).sort({
+    createdAt: -1,
+  });
 
   res.status(200).json(reviewsById);
 });

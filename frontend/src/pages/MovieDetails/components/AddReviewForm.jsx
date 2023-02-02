@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AddReviewForm({ movieId, movieName, movieYear }) {
+export default function AddReviewForm({ movieId, movieName, movieYear, setReviews }) {
   const [userName, setUserName] = React.useState("");
   const [rating, setRating] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -9,6 +9,12 @@ export default function AddReviewForm({ movieId, movieName, movieYear }) {
     setUserName("");
     setRating("");
     setDescription("");
+  }
+
+  async function refreshReviews() {
+    const res = await fetch(`/api/reviews/${movieId}`);
+    const data = await res.json();
+    setReviews(data);
   }
 
   async function handleSubmit(e) {
@@ -31,11 +37,12 @@ export default function AddReviewForm({ movieId, movieName, movieYear }) {
     const responseJson = await res.json();
     console.log(responseJson);
     resetForm();
+    refreshReviews();
   }
   return (
     <div className="mb-8">
       <p className="text-2xl font-semibold mb-2">Write a review</p>
-      <div className="rounded-lg shadow bg-white p-4">
+      <div className="rounded-lg shadow bg-white py-4 px-5">
         <form onSubmit={handleSubmit}>
           <div className="flex mb-4">
             <div className="flex flex-col mr-2">
@@ -43,23 +50,24 @@ export default function AddReviewForm({ movieId, movieName, movieYear }) {
               <input
                 type="text"
                 name="name"
+                className="form-input"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
             <div className="flex flex-col">
               <label className="text-sm font-semibold mb-1">Rating</label>
-              <div className="flex">
+              <div className="flex items-center">
                 <input
                   type="number"
                   min="0"
                   max="10"
                   name="rating"
-                  className="w-12"
+                  className="w-12 form-input mr-1"
                   value={rating}
                   onChange={(e) => setRating(e.target.value)}
                 />
-                / 10
+                <p>/ 10</p>
               </div>
             </div>
           </div>
@@ -67,6 +75,7 @@ export default function AddReviewForm({ movieId, movieName, movieYear }) {
             <label className="text-sm font-semibold mb-1">Review</label>
             <textarea
               name="review"
+              className="form-input h-24"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
