@@ -11,20 +11,18 @@ import MovieDetails from "./pages/MovieDetails/MovieDetails";
 
 export default function App() {
   const [movies, setMovies] = React.useState([]);
+  const [error, setError] = React.useState(undefined);
 
   return (
     <>
       <BrowserRouter>
-        <Header setMovies={setMovies} />
+        <Header setMovies={setMovies} setError={setError} />
         <div className="px-80">
           <Routes>
-            <Route
-              path={routes.DASHBOARD}
-              element={<Dashboard setMovies={setMovies} />}
-            />
+            <Route path={routes.DASHBOARD} element={<Dashboard />} />
             <Route
               path="/search/:query"
-              element={<MoviesList movies={movies} setMovies={setMovies} />}
+              element={<MoviesList movies={movies} error={error} />}
             />
             <Route path="/movie/:id" element={<MovieDetails />} />
           </Routes>

@@ -5,10 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "../api/paths";
 import logo from "../images/burzum-logo.jpg";
 
-export default function Header({ setMovies }) {
+export default function Header({ setMovies, setError }) {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [query, setQuery] = React.useState("");
-
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -23,15 +22,22 @@ export default function Header({ setMovies }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    fetch(`http://www.omdbapi.com/?apikey=c370deb2&s=${query}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setMovies(data.Search);
-        navigate(routes.SEARCH(query));
-      })
-      .catch((err) => console.log(err));
+    setError(undefined);
+    const res = await fetch(
+      `http://www.omdbapi.com/?apikey=c370deb2&s=${query}`
+    );
+    const data = await res.json();
+
+    console.log(data);
+
+    if (data.Response === "True") {
+      setMovies(data.Search);
+    } else {
+      setError("Something went wrong");
+    }
+    navigate(routes.SEARCH(query));
   }
 
   return (
@@ -58,11 +64,7 @@ export default function Header({ setMovies }) {
             className="border rounded-full px-4 py-1.5 mr-2 outline-0"
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button
-            type="submit"
-            className="bg-indigo-500 hover:bg-indigo-400 text-white rounded-full px-8 py-1"
-            disabled={query === ""}
-          >
+          <button type="submit" className="btn" disabled={query === ""}>
             Search
           </button>
         </form>

@@ -86,9 +86,7 @@ export default function AddReviewForm({
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <button className="bg-indigo-500 hover:bg-indigo-400 text-white rounded-full px-8 py-1">
-            Submit review
-          </button>
+          <button className="btn">Submit review</button>
         </form>
       </div>
     </div>

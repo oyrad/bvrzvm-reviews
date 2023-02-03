@@ -18,7 +18,20 @@ body {
   outline: none;
   border: 1px solid #bbb;
   border-radius: 4px;
-  padding: 4px 6px
+  padding: 4px 6px;
+}
+
+.btn {
+  background-color: black;
+  color: white;
+  padding: 4px 24px;
+  margin-right: 8px;
+  outline: none;
+  border-radius: 9999px;
+}
+
+.btn:hover {
+  opacity: 0.8;
 }
 
 input::-webkit-outer-spin-button,
