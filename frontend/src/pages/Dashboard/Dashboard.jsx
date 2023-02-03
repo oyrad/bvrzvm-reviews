@@ -1,7 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-import Search from "../../components/Search";
+import { useNavigate } from "react-router-dom";
 
 import { routes } from "../../api/paths";
 
@@ -21,7 +20,6 @@ export default function Dashboard({ setMovies }) {
 
   return (
     <>
-      <Search setMovies={setMovies} />
       <div className="text-2xl font-semibold mb-4">Recent reviews</div>
       {recentReviews.map((review) => (
         <div
@@ -39,7 +37,6 @@ export default function Dashboard({ setMovies }) {
           <p>{review.userName}</p>
           <p>{review.rating}/10</p>
           <p>{review.description}</p>
-
         </div>
       ))}
     </>

@@ -15,7 +15,7 @@ export default function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
+        <Header setMovies={setMovies} />
         <div className="px-80">
           <Routes>
             <Route

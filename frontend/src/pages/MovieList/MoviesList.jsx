@@ -2,15 +2,12 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import Search from "../../components/Search";
-
 import { routes } from "../../api/paths";
 
 export default function MoviesList({ movies, setMovies }) {
   const navigate = useNavigate();
   return (
     <>
-      <Search setMovies={setMovies} />
       <div className="grid grid-cols-2 gap-6 mb-4">
         {movies.map((movie) => (
           <div

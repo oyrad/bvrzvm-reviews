@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function AddReviewForm({ movieId, movieName, movieYear, setReviews }) {
+export default function AddReviewForm({
+  movieId,
+  movieName,
+  movieYear,
+  setReviews,
+}) {
   const [userName, setUserName] = React.useState("");
   const [rating, setRating] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -60,10 +65,11 @@ export default function AddReviewForm({ movieId, movieName, movieYear, setReview
               <div className="flex items-center">
                 <input
                   type="number"
+                  step="any"
                   min="0"
                   max="10"
                   name="rating"
-                  className="w-12 form-input mr-1"
+                  className="w-12 form-input mr-2"
                   value={rating}
                   onChange={(e) => setRating(e.target.value)}
                 />
