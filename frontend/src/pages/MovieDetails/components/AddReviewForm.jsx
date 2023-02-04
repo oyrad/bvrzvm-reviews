@@ -7,6 +7,7 @@ export default function AddReviewForm({
   movieName,
   movieYear,
   setReviews,
+  setReviewByCurrentUser
 }) {
   const [rating, setRating] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -22,6 +23,8 @@ export default function AddReviewForm({
     const res = await fetch(`/api/reviews/${movieId}`);
     const data = await res.json();
     setReviews(data);
+
+    fetch(`/api/reviews/${user.id}/${movieId}`).then((res) => res.json()).then((data) => setReviewByCurrentUser(data[0]))
   }
 
   async function handleSubmit(e) {

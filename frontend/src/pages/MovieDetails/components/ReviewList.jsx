@@ -14,7 +14,7 @@ export default function ReviewList({ movieId, reviews, setReviews }) {
   }, []);
 
   return (
-    <div>
+    <div className="mb-6">
       {reviews.length > 0 && (
         <p className="text-2xl font-semibold mb-2">
           Reviews

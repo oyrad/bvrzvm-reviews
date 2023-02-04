@@ -32,7 +32,7 @@ export default function Dashboard({ setMovies }) {
             <span className="font-normal ml-1">({review.movieYear})</span>
           </p>
           <p className="text-sm mb-2">{review.createdAt.split("T")[0]}</p>
-          <p>{review.name}</p>
+          <p>{review.user}</p>
           <p>{review.rating}/10</p>
           <p>{review.description}</p>
         </div>

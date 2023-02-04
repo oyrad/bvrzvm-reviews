@@ -90,6 +90,7 @@ export default function MovieDetails() {
             movieName={movie.Title}
             movieYear={movie.Year}
             setReviews={setReviews}
+            setReviewByCurrentUser={setReviewByCurrentUser}
           />
         ) : (
           <p className="text-xl mb-8">Log in to write a review.</p>
