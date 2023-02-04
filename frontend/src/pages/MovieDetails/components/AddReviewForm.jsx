@@ -29,7 +29,8 @@ export default function AddReviewForm({
     const res = await fetch("/api/reviews", {
       method: "POST",
       body: JSON.stringify({
-        name: user.displayName,
+        user: user.displayName,
+        userId: user.id,
         avatar: user.photos[0].value,
         movieId: movieId,
         movieName: movieName,

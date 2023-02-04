@@ -15,7 +15,8 @@ const postReview = asyncHandler(async (req, res) => {
   }
 
   const review = await Review.create({
-    name: req.body.name,
+    user: req.body.user,
+    userId: req.body.userId,
     avatar: req.body.avatar,
     movieId: req.body.movieId,
     movieName: req.body.movieName,
@@ -43,10 +44,20 @@ const getReviewsByMovieId = asyncHandler(async (req, res) => {
   res.status(200).json(reviewsById);
 });
 
+const getReviewByMovieIdAndUser = asyncHandler(async (req, res) => {
+  const reviewByIdAndUser = await Review.find({
+    movieId: req.params.movieId,
+    userId: req.params.userId,
+  });
+
+  res.status(200).json(reviewByIdAndUser);
+});
+
 module.exports = {
   getReviews,
   postReview,
   updateReview,
   deleteReview,
   getReviewsByMovieId,
+  getReviewByMovieIdAndUser,
 };

@@ -2,13 +2,17 @@ const mongoose = require("mongoose");
 
 const reviewSchema = mongoose.Schema(
   {
-    name: {
+    user: {
       type: String,
+      required: true,
+    },
+    userId: {
+      type: Number,
       required: true,
     },
     avatar: {
       type: String,
-      requried: true,
+      required: true,
     },
     movieId: {
       type: String,

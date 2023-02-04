@@ -6,10 +6,12 @@ import { getLinkFromSource } from "../../util/getLinkFromSource";
 import AddReviewForm from "./components/AddReviewForm";
 import ReviewList from "./components/ReviewList";
 import { UserContext } from "../../UserContext";
+import ReviewCard from "../../components/ReviewCard";
 
 export default function MovieDetails() {
   const [movie, setMovie] = React.useState();
   const [reviews, setReviews] = React.useState([]);
+  const [reviewByCurrentUser, setReviewByCurrentUser] = React.useState()
 
   const { id } = useParams();
   const { user } = React.useContext(UserContext);
@@ -18,7 +20,9 @@ export default function MovieDetails() {
     fetch(`http://www.omdbapi.com/?apikey=c370deb2&i=${id}`)
       .then((res) => res.json())
       .then((data) => setMovie(data));
-  }, [id]);
+
+    fetch(`/api/reviews/${user.id}/${id}`).then((res) => res.json()).then((data) => setReviewByCurrentUser(data[0]))
+  }, [user, id]);
 
   if (movie)
     return (
@@ -80,7 +84,7 @@ export default function MovieDetails() {
             </div>
           </div>
         </div>
-        {user.name ? (
+        {user.name ? reviewByCurrentUser ? (<div className="mb-8"><p className="text-2xl font-semibold mb-2">Your review</p><ReviewCard review={reviewByCurrentUser} /></div>) : (
           <AddReviewForm
             movieId={movie.imdbID}
             movieName={movie.Title}
@@ -88,7 +92,7 @@ export default function MovieDetails() {
             setReviews={setReviews}
           />
         ) : (
-          <p className="text-xl">Sign in to write a review</p>
+          <p className="text-xl mb-8">Log in to write a review.</p>
         )}
 
         <ReviewList

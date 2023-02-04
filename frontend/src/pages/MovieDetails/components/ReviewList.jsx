@@ -1,4 +1,5 @@
 import React from "react";
+import ReviewCard from "../../../components/ReviewCard";
 
 import { dateFormatter } from "../../../util/dateFormatter";
 
@@ -23,18 +24,7 @@ export default function ReviewList({ movieId, reviews, setReviews }) {
         </p>
       )}
       {reviews.map((review) => (
-        <div
-          key={review._id}
-          className="rounded-lg shadow bg-white flex flex-col mb-4 p-4"
-        >
-          <div className="flex items-center">
-            <p className="font-semibold text-lg mr-2">{review.name}</p>
-            <p>{review.rating}/10</p>
-          </div>
-          <p className="text-xs">{dateFormatter(review.createdAt)}</p>
-
-          {review.description && <p className="mt-2">{review.description}</p>}
-        </div>
+        <ReviewCard review={review} key={review._id} />
       ))}
     </div>
   );
