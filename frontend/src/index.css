@@ -22,8 +22,6 @@ body {
 }
 
 .btn {
-  background-color: black;
-  color: white;
   padding: 4px 24px;
   margin-right: 8px;
   outline: none;
@@ -32,6 +30,17 @@ body {
 
 .btn:hover {
   opacity: 0.8;
+}
+
+.btn-filled {
+  background-color: black;
+  color: white;
+}
+
+.btn-inverse {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
 }
 
 input::-webkit-outer-spin-button,

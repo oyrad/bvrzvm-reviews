@@ -15,9 +15,9 @@ const postReview = asyncHandler(async (req, res) => {
   }
 
   const review = await Review.create({
-    userId: req.body.userId,
+    name: req.body.name,
+    avatar: req.body.avatar,
     movieId: req.body.movieId,
-    userName: req.body.userName,
     movieName: req.body.movieName,
     movieYear: req.body.movieYear,
     rating: req.body.rating,

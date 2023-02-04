@@ -28,7 +28,7 @@ export default function ReviewList({ movieId, reviews, setReviews }) {
           className="rounded-lg shadow bg-white flex flex-col mb-4 p-4"
         >
           <div className="flex items-center">
-            <p className="font-semibold text-xl mr-2">{review.userName}</p>
+            <p className="font-semibold text-lg mr-2">{review.name}</p>
             <p>{review.rating}/10</p>
           </div>
           <p className="text-xs">{dateFormatter(review.createdAt)}</p>

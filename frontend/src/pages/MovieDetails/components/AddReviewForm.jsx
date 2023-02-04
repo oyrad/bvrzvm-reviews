@@ -1,17 +1,19 @@
 import React from "react";
 
+import { UserContext } from "../../../UserContext";
+
 export default function AddReviewForm({
   movieId,
   movieName,
   movieYear,
   setReviews,
 }) {
-  const [userName, setUserName] = React.useState("");
   const [rating, setRating] = React.useState("");
   const [description, setDescription] = React.useState("");
 
+  const { user } = React.useContext(UserContext);
+
   function resetForm() {
-    setUserName("");
     setRating("");
     setDescription("");
   }
@@ -27,9 +29,9 @@ export default function AddReviewForm({
     const res = await fetch("/api/reviews", {
       method: "POST",
       body: JSON.stringify({
-        userId: 1,
+        name: user.displayName,
+        avatar: user.photos[0].value,
         movieId: movieId,
-        userName: userName,
         movieName: movieName,
         movieYear: movieYear,
         rating: rating,
@@ -50,16 +52,6 @@ export default function AddReviewForm({
       <div className="rounded-lg shadow bg-white py-4 px-5">
         <form onSubmit={handleSubmit}>
           <div className="flex mb-4">
-            <div className="flex flex-col mr-2">
-              <label className="text-sm font-semibold mb-1">Name</label>
-              <input
-                type="text"
-                name="name"
-                className="form-input"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-              />
-            </div>
             <div className="flex flex-col">
               <label className="text-sm font-semibold mb-1">Rating</label>
               <div className="flex items-center">
@@ -86,7 +78,7 @@ export default function AddReviewForm({
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <button className="btn">Submit review</button>
+          <button className="btn btn-inverse">Submit review</button>
         </form>
       </div>
     </div>

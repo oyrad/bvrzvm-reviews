@@ -16,7 +16,7 @@ export default function Dashboard({ setMovies }) {
       setRecentReviews(data);
     }
     getRecentReviews();
-  });
+  }, []);
 
   return (
     <>
@@ -24,17 +24,15 @@ export default function Dashboard({ setMovies }) {
       {recentReviews.map((review) => (
         <div
           key={review._id}
-          className="rounded-lg shadow bg-white flex flex-col mb-4 p-4"
+          className="rounded-lg shadow bg-white flex flex-col mb-4 p-4 cursor-pointer"
+          onClick={() => navigate(routes.MOVIE(review.movieId))}
         >
-          <p
-            className="text-lg font-semibold cursor-pointer"
-            onClick={() => navigate(routes.MOVIE(review.movieId))}
-          >
+          <p className="text-lg font-semibold">
             {review.movieName}
             <span className="font-normal ml-1">({review.movieYear})</span>
           </p>
           <p className="text-sm mb-2">{review.createdAt.split("T")[0]}</p>
-          <p>{review.userName}</p>
+          <p>{review.name}</p>
           <p>{review.rating}/10</p>
           <p>{review.description}</p>
         </div>

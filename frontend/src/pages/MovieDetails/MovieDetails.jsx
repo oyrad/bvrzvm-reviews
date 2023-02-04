@@ -5,20 +5,20 @@ import { getLogoFromSource } from "../../util/getLogoFromSource";
 import { getLinkFromSource } from "../../util/getLinkFromSource";
 import AddReviewForm from "./components/AddReviewForm";
 import ReviewList from "./components/ReviewList";
+import { UserContext } from "../../UserContext";
 
 export default function MovieDetails() {
   const [movie, setMovie] = React.useState();
   const [reviews, setReviews] = React.useState([]);
 
   const { id } = useParams();
+  const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     fetch(`http://www.omdbapi.com/?apikey=c370deb2&i=${id}`)
       .then((res) => res.json())
       .then((data) => setMovie(data));
   }, [id]);
-
-  console.log(movie);
 
   if (movie)
     return (
@@ -80,12 +80,17 @@ export default function MovieDetails() {
             </div>
           </div>
         </div>
-        <AddReviewForm
-          movieId={movie.imdbID}
-          movieName={movie.Title}
-          movieYear={movie.Year}
-          setReviews={setReviews}
-        />
+        {user.name ? (
+          <AddReviewForm
+            movieId={movie.imdbID}
+            movieName={movie.Title}
+            movieYear={movie.Year}
+            setReviews={setReviews}
+          />
+        ) : (
+          <p className="text-xl">Sign in to write a review</p>
+        )}
+
         <ReviewList
           movieId={movie.imdbID}
           reviews={reviews}

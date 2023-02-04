@@ -2,15 +2,15 @@ const mongoose = require("mongoose");
 
 const reviewSchema = mongoose.Schema(
   {
-    userId: {
-      type: Number,
-      required: true,
-    },
-    movieId: {
+    name: {
       type: String,
       required: true,
     },
-    userName: {
+    avatar: {
+      type: String,
+      requried: true,
+    },
+    movieId: {
       type: String,
       required: true,
     },
@@ -28,7 +28,6 @@ const reviewSchema = mongoose.Schema(
     },
     description: {
       type: String,
-      required: false,
     },
   },
   {

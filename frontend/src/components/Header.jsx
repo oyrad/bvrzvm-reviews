@@ -3,12 +3,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { routes } from "../api/paths";
+import { UserContext } from "../UserContext";
+
 import logo from "../images/burzum-logo.jpg";
 
 export default function Header({ setMovies, setError }) {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [query, setQuery] = React.useState("");
+
   const navigate = useNavigate();
+  const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     function handleScroll() {
@@ -30,14 +34,21 @@ export default function Header({ setMovies, setError }) {
     );
     const data = await res.json();
 
-    console.log(data);
-
     if (data.Response === "True") {
       setMovies(data.Search);
     } else {
       setError("Something went wrong");
     }
     navigate(routes.SEARCH(query));
+  }
+
+  function googleAuth() {
+    console.log("wut");
+    window.open("http://localhost:4420/auth/google", "_self");
+  }
+
+  function logout() {
+    window.open("http://localhost:4420/auth/logout", "_self");
   }
 
   return (
@@ -54,7 +65,7 @@ export default function Header({ setMovies, setError }) {
         <p className="text-xl font-semibold pb-0.5">reviews</p>
       </div>
       <div className="flex items-center">
-        <form onSubmit={handleSubmit} className="flex">
+        <form onSubmit={handleSubmit} className="flex mr-8">
           <input
             value={query}
             name="search"
@@ -64,11 +75,31 @@ export default function Header({ setMovies, setError }) {
             className="border rounded-full px-4 py-1.5 mr-2 outline-0"
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button type="submit" className="btn" disabled={query === ""}>
+          <button
+            type="submit"
+            className="btn btn-inverse"
+            disabled={query === ""}
+          >
             Search
           </button>
         </form>
-        <p className="mx-8 cursor-pointer">Log in</p>
+        {user.displayName ? (
+          <>
+            <img
+              src={user.photos[0].value}
+              alt="avatar"
+              className="w-10 mr-2 rounded-full"
+            />
+            <p className="mr-8">{user.displayName}</p>
+            <p onClick={logout} className="cursor-pointer">
+              Log out
+            </p>
+          </>
+        ) : (
+          <p onClick={googleAuth} className="cursor-pointer">
+            Log in
+          </p>
+        )}
       </div>
     </header>
   );
