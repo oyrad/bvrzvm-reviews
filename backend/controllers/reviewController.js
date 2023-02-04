@@ -32,9 +32,10 @@ const updateReview = asyncHandler(async (req, res) =>
   res.status(200).json({ message: `Update review ${req.params.id}` })
 );
 
-const deleteReview = asyncHandler(async (req, res) =>
-  res.status(200).json({ message: `Delete review ${req.params.id}` })
-);
+const deleteReview = asyncHandler(async (req, res) => {
+  const deletedReview = await Review.deleteOne({ _id: req.params.id });
+  res.status(200).json(deletedReview);
+});
 
 const getReviewsByMovieId = asyncHandler(async (req, res) => {
   const reviewsById = await Review.find({ movieId: req.params.id }).sort({

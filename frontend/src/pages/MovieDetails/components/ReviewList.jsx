@@ -1,17 +1,7 @@
 import React from "react";
 import ReviewCard from "../../../components/ReviewCard";
 
-import { dateFormatter } from "../../../util/dateFormatter";
-
-export default function ReviewList({ movieId, reviews, setReviews }) {
-  React.useEffect(() => {
-    async function fetchReviews() {
-      const res = await fetch(`/api/reviews/${movieId}`);
-      const data = await res.json();
-      setReviews(data);
-    }
-    fetchReviews();
-  }, []);
+export default function ReviewList({ reviews }) {
 
   return (
     <div className="mb-6">
@@ -24,7 +14,7 @@ export default function ReviewList({ movieId, reviews, setReviews }) {
         </p>
       )}
       {reviews.map((review) => (
-        <ReviewCard review={review} key={review._id} />
+        <ReviewCard review={review} key={review._id} isEditable={false} />
       ))}
     </div>
   );

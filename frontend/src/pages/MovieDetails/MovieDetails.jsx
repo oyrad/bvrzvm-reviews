@@ -24,6 +24,28 @@ export default function MovieDetails() {
     fetch(`/api/reviews/${user.id}/${id}`).then((res) => res.json()).then((data) => setReviewByCurrentUser(data[0]))
   }, [user, id]);
 
+  React.useEffect(() => {
+    async function fetchReviews() {
+      const res = await fetch(`/api/reviews/${id}`);
+      const data = await res.json();
+      setReviews(data);
+    }
+    fetchReviews();
+  }, []);
+
+  async function refreshReviews() {
+    const res = await fetch(`/api/reviews/${id}`);
+    const data = await res.json();
+    setReviews(data);
+
+    fetch(`/api/reviews/${user.id}/${id}`).then((res) => res.json()).then((data) => setReviewByCurrentUser(data[0]))
+  }
+
+  function refreshReviewsOnDelete() {
+    setReviewByCurrentUser()
+    setReviews(prevReviews => prevReviews.filter(review => review._id !== reviewByCurrentUser._id))
+  }
+
   if (movie)
     return (
       <>
@@ -84,22 +106,19 @@ export default function MovieDetails() {
             </div>
           </div>
         </div>
-        {user.name ? reviewByCurrentUser ? (<div className="mb-8"><p className="text-2xl font-semibold mb-2">Your review</p><ReviewCard review={reviewByCurrentUser} /></div>) : (
+        {user.name ? reviewByCurrentUser ? (<div className="mb-8"><p className="text-2xl font-semibold mb-2">Your review</p><ReviewCard review={reviewByCurrentUser} isEditable={true} refreshReviews={refreshReviewsOnDelete} /></div>) : (
           <AddReviewForm
             movieId={movie.imdbID}
             movieName={movie.Title}
             movieYear={movie.Year}
-            setReviews={setReviews}
-            setReviewByCurrentUser={setReviewByCurrentUser}
+            refreshReviews={refreshReviews}
           />
         ) : (
           <p className="text-xl mb-8">Log in to write a review.</p>
         )}
 
         <ReviewList
-          movieId={movie.imdbID}
           reviews={reviews}
-          setReviews={setReviews}
         />
       </>
     );
