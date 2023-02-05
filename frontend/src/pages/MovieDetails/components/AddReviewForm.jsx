@@ -60,6 +60,7 @@ export default function AddReviewForm({
                   className="w-12 form-input mr-2"
                   value={rating}
                   onChange={(e) => setRating(e.target.value)}
+                  required
                 />
                 <p>/ 10</p>
               </div>
