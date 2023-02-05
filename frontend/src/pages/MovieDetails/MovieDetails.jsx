@@ -3,15 +3,20 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { getLogoFromSource } from "../../util/getLogoFromSource";
 import { getLinkFromSource } from "../../util/getLinkFromSource";
+import { calculateRating } from "../../util/calculateRating";
 import AddReviewForm from "./components/AddReviewForm";
 import ReviewList from "./components/ReviewList";
 import { UserContext } from "../../UserContext";
 import ReviewCard from "../../components/ReviewCard";
+import EditReviewForm from "./components/EditReviewForm";
+
+import burzum from "../../images/burzum-logo.jpg"
 
 export default function MovieDetails() {
   const [movie, setMovie] = React.useState();
   const [reviews, setReviews] = React.useState([]);
-  const [reviewByCurrentUser, setReviewByCurrentUser] = React.useState()
+  const [reviewByCurrentUser, setReviewByCurrentUser] = React.useState();
+  const [isEditModeOn, setIsEditModeOn] = React.useState(false);
 
   const { id } = useParams();
   const { user } = React.useContext(UserContext);
@@ -21,25 +26,14 @@ export default function MovieDetails() {
       .then((res) => res.json())
       .then((data) => setMovie(data));
 
-    fetch(`/api/reviews/${user.id}/${id}`).then((res) => res.json()).then((data) => setReviewByCurrentUser(data[0]))
+    fetch(`/api/reviews/${id}`)
+      .then(res => res.json())
+      .then(data => setReviews(data));
+
+    fetch(`/api/reviews/${user.id}/${id}`)
+      .then((res) => res.json())
+      .then((data) => setReviewByCurrentUser(data[0]))
   }, [user, id]);
-
-  React.useEffect(() => {
-    async function fetchReviews() {
-      const res = await fetch(`/api/reviews/${id}`);
-      const data = await res.json();
-      setReviews(data);
-    }
-    fetchReviews();
-  }, []);
-
-  async function refreshReviews() {
-    const res = await fetch(`/api/reviews/${id}`);
-    const data = await res.json();
-    setReviews(data);
-
-    fetch(`/api/reviews/${user.id}/${id}`).then((res) => res.json()).then((data) => setReviewByCurrentUser(data[0]))
-  }
 
   function refreshReviewsOnDelete() {
     setReviewByCurrentUser()
@@ -81,7 +75,9 @@ export default function MovieDetails() {
             </div>
             <div>
               <p className="font-semibold mb-2">Ratings:</p>
-              <div className="flex space-x-8">
+              <div className="flex items-center space-x-8">
+                <img src={burzum} alt="burzum" className="w-36 -mt-4 -ml-1 -mr-5" />
+                <p className="-mt-3">{calculateRating(reviews)}</p>
                 {movie.Ratings.map((rating) => (
                   <a
                     key={rating.Source}
@@ -99,21 +95,39 @@ export default function MovieDetails() {
                       alt="logo"
                       className="w-20 mr-4"
                     />
-                    <p key={rating.Source}>{rating.Value}</p>
+                    <p>{rating.Value}</p>
                   </a>
                 ))}
               </div>
             </div>
           </div>
         </div>
-        {user.name ? reviewByCurrentUser ? (<div className="mb-8"><p className="text-2xl font-semibold mb-2">Your review</p><ReviewCard review={reviewByCurrentUser} isEditable={true} refreshReviews={refreshReviewsOnDelete} /></div>) : (
-          <AddReviewForm
-            movieId={movie.imdbID}
-            movieName={movie.Title}
-            movieYear={movie.Year}
-            refreshReviews={refreshReviews}
-          />
-        ) : (
+        {user.name ? reviewByCurrentUser ? (
+          <div className="mb-8">
+            {isEditModeOn ? <>
+              <EditReviewForm
+                currentReview={reviewByCurrentUser}
+                setCurrentReview={setReviewByCurrentUser}
+                reviews={reviews}
+                setReviews={setReviews}
+                setIsEditModeOn={setIsEditModeOn}
+              />
+
+            </> : <>
+              <p className="text-2xl font-semibold mb-2">Your review</p>
+              <ReviewCard review={reviewByCurrentUser} isEditable={true} refreshReviews={refreshReviewsOnDelete} setIsEditModeOn={setIsEditModeOn} />
+            </>}
+
+          </div>)
+          : (
+            <AddReviewForm
+              movieId={movie.imdbID}
+              movieName={movie.Title}
+              movieYear={movie.Year}
+              setReviews={setReviews}
+              setCurrentReview={setReviewByCurrentUser}
+            />
+          ) : (
           <p className="text-xl mb-8">Log in to write a review.</p>
         )}
 

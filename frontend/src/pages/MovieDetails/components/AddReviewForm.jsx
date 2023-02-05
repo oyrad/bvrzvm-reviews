@@ -6,41 +6,43 @@ export default function AddReviewForm({
   movieId,
   movieName,
   movieYear,
-  refreshReviews
+  setReviews,
+  setCurrentReview
 }) {
   const [rating, setRating] = React.useState("");
   const [description, setDescription] = React.useState("");
 
   const { user } = React.useContext(UserContext);
 
-  function resetForm() {
-    setRating("");
-    setDescription("");
-  }
-
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    const res = await fetch("/api/reviews", {
+    const newReview = {
+      user: user.displayName,
+      userId: user.id,
+      avatar: user.photos[0].value,
+      movieId: movieId,
+      movieName: movieName,
+      movieYear: movieYear,
+      rating: rating,
+      description: description,
+    }
+    fetch("/api/reviews", {
       method: "POST",
-      body: JSON.stringify({
-        user: user.displayName,
-        userId: user.id,
-        avatar: user.photos[0].value,
-        movieId: movieId,
-        movieName: movieName,
-        movieYear: movieYear,
-        rating: rating,
-        description: description,
-      }),
+      body: JSON.stringify(newReview),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const responseJson = await res.json();
-    console.log(responseJson);
-    resetForm();
-    refreshReviews();
+    const currentDate = new Date().toISOString()
+    const newReviewForDisplay = {
+      ...newReview,
+      createdAt: currentDate,
+      updatedAt: currentDate,
+    }
+    setCurrentReview(newReviewForDisplay)
+    setReviews(prevReviews => [newReviewForDisplay, ...prevReviews])
   }
+
   return (
     <div className="mb-8">
       <p className="text-2xl font-semibold mb-2">Write a review</p>
@@ -73,7 +75,7 @@ export default function AddReviewForm({
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <button className="btn btn-inverse">Submit review</button>
+          <button className="btn btn-inverse">Add review</button>
         </form>
       </div>
     </div>

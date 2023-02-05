@@ -2,19 +2,17 @@ import React from "react";
 
 import { dateFormatter } from "../util/dateFormatter";
 
-export default function ReviewCard({ review, isEditable, refreshReviews }) {
+export default function ReviewCard({ review, isEditable, refreshReviews, setIsEditModeOn }) {
 
   function handleDelete() {
     fetch(`/api/reviews/${review._id}`, {
       method: "DELETE"
-    }).then(res => res.json())
-      .then(data => console.log(data))
+    })
     refreshReviews();
   }
 
   return (
     <div
-      key={review._id}
       className="rounded-lg shadow bg-white flex justify-between items-center mb-4"
     >
       <div className="flex">
@@ -29,13 +27,13 @@ export default function ReviewCard({ review, isEditable, refreshReviews }) {
               <p className="font-semibold text-lg mr-2">{review.user}</p>
               <p>{review.rating}/10</p>
             </div>
-            <p className="text-xs">{dateFormatter(review.createdAt)}</p>
+            <p className="text-xs text-gray-500 italic">{review.createdAt === review.updatedAt ? dateFormatter(review.createdAt) : <span>Edited: {dateFormatter(review.updatedAt)}</span>}</p>
             {review.description && <p className="mt-2">{review.description}</p>}
           </div>
         </div>
       </div>
       {isEditable && <div className="flex space-x-6 mr-10">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 hover:text-gray-500 cursor-pointer" >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 hover:text-gray-500 cursor-pointer" onClick={() => setIsEditModeOn(true)}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
         </svg>
 

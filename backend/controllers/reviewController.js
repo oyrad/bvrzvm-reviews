@@ -28,12 +28,19 @@ const postReview = asyncHandler(async (req, res) => {
   res.status(200).json(review);
 });
 
-const updateReview = asyncHandler(async (req, res) =>
-  res.status(200).json({ message: `Update review ${req.params.id}` })
-);
+const updateReview = asyncHandler(async (req, res) => {
+  const updatedReview = await Review.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+
+  res.status(200).json(updatedReview);
+});
 
 const deleteReview = asyncHandler(async (req, res) => {
   const deletedReview = await Review.deleteOne({ _id: req.params.id });
+
   res.status(200).json(deletedReview);
 });
 
