@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { routes } from "../../api/paths";
+import { dateFormatter } from "../../util/dateFormatter";
 
 export default function Dashboard({ setMovies }) {
   const [recentReviews, setRecentReviews] = React.useState([]);
@@ -24,19 +25,26 @@ export default function Dashboard({ setMovies }) {
       {recentReviews.map((review) => (
         <div
           key={review._id}
-          className="rounded-lg shadow bg-white flex flex-col mb-4 p-4 cursor-pointer"
-          onClick={() => navigate(routes.MOVIE(review.movieId))}
+          className="rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer"
+
         >
-          <p className="text-lg font-semibold">
-            {review.movieName}
-            <span className="font-normal ml-1">({review.movieYear})</span>
-          </p>
-          <p className="text-sm mb-2">{review.createdAt.split("T")[0]}</p>
-          <p>{review.user}</p>
-          <p>{review.rating}/10</p>
-          <p>{review.description}</p>
+          <div className="flex">
+            <div className="relative center text-white">
+              <img src={review.avatar} alt="avatar" className="rounded-l-lg w-28 opacity-70" />
+              <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl text-shadow">{review.rating}</p>
+            </div>
+            <div className="flex flex-col justify-center p-4" onClick={() => navigate(routes.MOVIE(review.movieId))}>
+              <p className="text-xl">
+                <span className="font-semibold">{review.movieName}</span> (
+                {review.movieYear})
+              </p>
+              <p className="text-xs text-gray-500 italic">{review.createdAt === review.updatedAt ? dateFormatter(review.createdAt) : <span>Edited: {dateFormatter(review.updatedAt)}</span>} by {review.user}</p>
+              {review.description && <p className="mt-2">{review.description}</p>}
+            </div>
+          </div>
         </div>
-      ))}
+      ))
+      }
     </>
   );
 }

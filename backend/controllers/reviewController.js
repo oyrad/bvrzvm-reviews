@@ -21,6 +21,7 @@ const postReview = asyncHandler(async (req, res) => {
     movieId: req.body.movieId,
     movieName: req.body.movieName,
     movieYear: req.body.movieYear,
+    moviePoster: req.body.moviePoster,
     rating: req.body.rating,
     description: req.body.description,
   });

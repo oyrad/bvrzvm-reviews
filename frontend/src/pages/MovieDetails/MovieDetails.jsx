@@ -40,8 +40,6 @@ export default function MovieDetails() {
     setReviews(prevReviews => prevReviews.filter(review => review._id !== reviewByCurrentUser._id))
   }
 
-  console.log(movie)
-
   if (movie)
     return (
       <>
@@ -123,9 +121,7 @@ export default function MovieDetails() {
           </div>)
           : (
             <AddReviewForm
-              movieId={movie.imdbID}
-              movieName={movie.Title}
-              movieYear={movie.Year}
+              movie={movie}
               setReviews={setReviews}
               setCurrentReview={setReviewByCurrentUser}
             />

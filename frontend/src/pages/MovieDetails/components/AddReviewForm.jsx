@@ -3,9 +3,7 @@ import React from "react";
 import { UserContext } from "../../../UserContext";
 
 export default function AddReviewForm({
-  movieId,
-  movieName,
-  movieYear,
+  movie,
   setReviews,
   setCurrentReview
 }) {
@@ -20,9 +18,10 @@ export default function AddReviewForm({
       user: user.displayName,
       userId: user.id,
       avatar: user.photos[0].value,
-      movieId: movieId,
-      movieName: movieName,
-      movieYear: movieYear,
+      movieId: movie.imdbID,
+      movieName: movie.Title,
+      movieYear: movie.Year,
+      moviePoster: movie.Poster,
       rating: rating,
       description: description,
     }
