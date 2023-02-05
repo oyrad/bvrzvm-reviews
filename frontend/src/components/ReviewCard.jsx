@@ -21,7 +21,7 @@ export default function ReviewCard({ review, isEditable, refreshReviews, setIsEd
           alt="avatar"
           className="w-28 rounded-l-lg mr-1"
         />
-        <div>
+        <div className="flex items-center">
           <div className="flex flex-col p-4">
             <div className="flex items-center">
               <p className="font-semibold text-lg mr-2">{review.user}</p>
