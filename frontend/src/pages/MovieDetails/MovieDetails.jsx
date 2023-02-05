@@ -40,6 +40,8 @@ export default function MovieDetails() {
     setReviews(prevReviews => prevReviews.filter(review => review._id !== reviewByCurrentUser._id))
   }
 
+  console.log(movie)
+
   if (movie)
     return (
       <>

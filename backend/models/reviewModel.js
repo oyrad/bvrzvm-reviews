@@ -23,7 +23,7 @@ const reviewSchema = mongoose.Schema(
       required: true,
     },
     movieYear: {
-      type: Number,
+      type: String,
       required: true,
     },
     rating: {

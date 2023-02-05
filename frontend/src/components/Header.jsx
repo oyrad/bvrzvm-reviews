@@ -37,7 +37,7 @@ export default function Header({ setMovies, setError }) {
     if (data.Response === "True") {
       setMovies(data.Search);
     } else {
-      setError("Something went wrong");
+      setError(data.Error);
     }
     navigate(routes.SEARCH(query));
   }
@@ -53,15 +53,14 @@ export default function Header({ setMovies, setError }) {
 
   return (
     <header
-      className={`flex justify-between items-center py-4 px-80 mb-8 sticky top-0 z-50 w-full bg-white ${
-        isScrolled && "shadow-lg"
-      }`}
+      className={`flex justify-between items-center py-4 px-80 mb-8 sticky top-0 z-50 w-full bg-white ${isScrolled && "shadow-lg"
+        }`}
     >
       <div
         className="flex items-end cursor-pointer"
         onClick={() => navigate(routes.DASHBOARD)}
       >
-        <img src={logo} className="w-44" />
+        <img src={logo} alt="burzum" className="w-44" />
         <p className="text-xl font-semibold pb-0.5">reviews</p>
       </div>
       <div className="flex items-center">

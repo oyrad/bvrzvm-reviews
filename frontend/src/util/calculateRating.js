@@ -1,5 +1,4 @@
 export function calculateRating(reviews) {
-  console.log(reviews);
   let rating = 0;
   if (reviews.length > 0) {
     reviews.forEach((rev) => (rating = rating + parseFloat(rev.rating)));
