@@ -22,7 +22,7 @@ export default function AddReviewForm({
       movieName: movie.Title,
       movieYear: movie.Year,
       moviePoster: movie.Poster,
-      rating: rating,
+      rating: Math.round(rating * 10) / 10,
       description: description,
     }
     fetch("/api/reviews", {
@@ -70,6 +70,7 @@ export default function AddReviewForm({
             <label className="text-sm font-semibold mb-1">Review</label>
             <textarea
               name="review"
+              maxLength={200}
               className="form-input h-24"
               value={description}
               onChange={(e) => setDescription(e.target.value)}

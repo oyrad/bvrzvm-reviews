@@ -14,7 +14,7 @@ export default function EditReviewForm({
         e.preventDefault();
         const updatedReview = {
             ...currentReview,
-            rating: rating,
+            rating: Math.round(rating * 10) / 10,
             description: description,
         }
         fetch(`/api/reviews/${currentReview._id}`, {
@@ -63,6 +63,7 @@ export default function EditReviewForm({
                         <label className="text-sm font-semibold mb-1">Review</label>
                         <textarea
                             name="review"
+                            maxLength={200}
                             className="form-input h-24"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}

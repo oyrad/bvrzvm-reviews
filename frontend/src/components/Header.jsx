@@ -43,7 +43,6 @@ export default function Header({ setMovies, setError }) {
   }
 
   function googleAuth() {
-    console.log("wut");
     window.open("http://localhost:4420/auth/google", "_self");
   }
 
@@ -58,7 +57,7 @@ export default function Header({ setMovies, setError }) {
     >
       <div
         className="flex items-end cursor-pointer"
-        onClick={() => navigate(routes.DASHBOARD)}
+        onClick={() => { setQuery(""); navigate(routes.DASHBOARD); }}
       >
         <img src={logo} alt="burzum" className="w-44" />
         <p className="text-xl font-semibold pb-0.5">reviews</p>

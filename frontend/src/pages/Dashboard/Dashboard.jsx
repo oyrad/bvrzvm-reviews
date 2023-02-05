@@ -30,7 +30,7 @@ export default function Dashboard({ setMovies }) {
         >
           <div className="flex">
             <div className="relative center text-white">
-              <img src={review.avatar} alt="avatar" className="rounded-l-lg w-28 opacity-70" />
+              <img src={review.avatar} alt="avatar" className="rounded-l-lg w-28 opacity-60" />
               <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl text-shadow">{review.rating}</p>
             </div>
             <div className="flex flex-col justify-center p-4" onClick={() => navigate(routes.MOVIE(review.movieId))}>
