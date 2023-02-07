@@ -22,7 +22,7 @@ export default function MovieDetails() {
   const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=c370deb2&i=${id}`)
+    fetch(`http://www.omdbapi.com/?apikey=c370deb2&i=${id}&plot=full`)
       .then((res) => res.json())
       .then((data) => setMovie(data));
 
@@ -47,7 +47,7 @@ export default function MovieDetails() {
           <img
             src={movie.Poster}
             alt="poster"
-            className="rounded-l-lg mr-1 w-64"
+            className="rounded-l-lg mr-1 w-68"
           />
           <div className="p-4 flex flex-col justify-between">
             <div>
@@ -71,7 +71,7 @@ export default function MovieDetails() {
                 </span>
                 {movie.Writer}
               </p>
-              <p className="mb-4 w-2/3">{movie.Plot}</p>
+              <p className="mb-4 w-3/4">{movie.Plot}</p>
             </div>
             <div>
               <p className="font-semibold mb-2">Ratings:</p>

@@ -30,7 +30,7 @@ export default function Header({ setMovies, setError }) {
     e.preventDefault();
     setError(undefined);
     const res = await fetch(
-      `http://www.omdbapi.com/?apikey=c370deb2&s=${query}`
+      `http://www.omdbapi.com/?apikey=c370deb2&s=${query}&type=movie`
     );
     const data = await res.json();
 

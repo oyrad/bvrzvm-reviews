@@ -6,13 +6,13 @@ import { routes } from "../../api/paths";
 
 export default function MoviesList({ movies, error }) {
   const navigate = useNavigate();
-  console.log(error);
+
   return (
     <>
       {error ? (
         <div className="bg-red-100 w-full p-3 rounded-lg -mt-2"><p className="text-red-600">Error: {error}</p></div>
       ) : (
-        <div className="grid grid-cols-2 gap-6 mb-4">
+        <div className="grid grid-cols-2 gap-6 mb-8">
           {movies.map((movie) => (
             <div
               className="bg-white rounded-xl shadow flex justify-between hover:scale-[1.02] transition-all cursor-pointer"

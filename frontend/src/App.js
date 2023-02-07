@@ -29,8 +29,8 @@ export default function App() {
         .then((res) => {
           if (res.status === 200) {
             return res.json();
-            throw new Error("authentication failed");
           }
+          throw new Error("authentication failed");
         })
         .then((data) => {
           setUser(data.user);
