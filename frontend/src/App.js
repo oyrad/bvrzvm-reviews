@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
-import MoviesList from "./pages/MovieList/MoviesList";
+import MovieList from "./pages/MovieList/MovieList";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { routes } from "./api/paths";
@@ -50,7 +50,7 @@ export default function App() {
             <Route path={routes.DASHBOARD} element={<Dashboard />} />
             <Route
               path="/search/:query"
-              element={<MoviesList movies={movies} error={error} />}
+              element={<MovieList movies={movies} error={error} />}
             />
             <Route path="/movie/:id" element={<MovieDetails />} />
           </Routes>
