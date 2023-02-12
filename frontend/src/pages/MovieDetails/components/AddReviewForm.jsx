@@ -2,11 +2,7 @@ import React from "react";
 
 import { UserContext } from "../../../UserContext";
 
-export default function AddReviewForm({
-  movie,
-  setReviews,
-  setCurrentReview
-}) {
+export default function AddReviewForm({ movie, setReviews, setCurrentReview }) {
   const [rating, setRating] = React.useState("");
   const [description, setDescription] = React.useState("");
 
@@ -24,7 +20,7 @@ export default function AddReviewForm({
       moviePoster: movie.Poster,
       rating: Math.round(rating * 10) / 10,
       description: description,
-    }
+    };
     fetch("/api/reviews", {
       method: "POST",
       body: JSON.stringify(newReview),
@@ -32,14 +28,14 @@ export default function AddReviewForm({
         "Content-Type": "application/json",
       },
     });
-    const currentDate = new Date().toISOString()
+    const currentDate = new Date().toISOString();
     const newReviewForDisplay = {
       ...newReview,
       createdAt: currentDate,
       updatedAt: currentDate,
-    }
-    setCurrentReview(newReviewForDisplay)
-    setReviews(prevReviews => [newReviewForDisplay, ...prevReviews])
+    };
+    setCurrentReview(newReviewForDisplay);
+    setReviews((prevReviews) => [newReviewForDisplay, ...prevReviews]);
   }
 
   return (

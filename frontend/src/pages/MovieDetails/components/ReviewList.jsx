@@ -2,7 +2,6 @@ import React from "react";
 import ReviewCard from "../../../components/ReviewCard";
 
 export default function ReviewList({ reviews }) {
-
   return (
     <div className="mb-6">
       {reviews.length > 0 && (

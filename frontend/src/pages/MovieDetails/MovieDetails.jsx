@@ -10,7 +10,7 @@ import { UserContext } from "../../UserContext";
 import ReviewCard from "../../components/ReviewCard";
 import EditReviewForm from "./components/EditReviewForm";
 
-import burzum from "../../images/burzum-logo.jpg"
+import burzum from "../../images/burzum-logo.jpg";
 
 export default function MovieDetails() {
   const [movie, setMovie] = React.useState();
@@ -27,17 +27,19 @@ export default function MovieDetails() {
       .then((data) => setMovie(data));
 
     fetch(`/api/reviews/${id}`)
-      .then(res => res.json())
-      .then(data => setReviews(data));
+      .then((res) => res.json())
+      .then((data) => setReviews(data));
 
     fetch(`/api/reviews/${user.id}/${id}`)
       .then((res) => res.json())
-      .then((data) => setReviewByCurrentUser(data[0]))
+      .then((data) => setReviewByCurrentUser(data[0]));
   }, [user, id]);
 
   function refreshReviewsOnDelete() {
-    setReviewByCurrentUser()
-    setReviews(prevReviews => prevReviews.filter(review => review._id !== reviewByCurrentUser._id))
+    setReviewByCurrentUser();
+    setReviews((prevReviews) =>
+      prevReviews.filter((review) => review._id !== reviewByCurrentUser._id)
+    );
   }
 
   if (movie)
@@ -76,7 +78,11 @@ export default function MovieDetails() {
             <div>
               <p className="font-semibold mb-2">Ratings:</p>
               <div className="flex items-center space-x-8">
-                <img src={burzum} alt="burzum" className="w-36 -mt-4 -ml-1 -mr-5" />
+                <img
+                  src={burzum}
+                  alt="burzum"
+                  className="w-36 -mt-4 -ml-1 -mr-5"
+                />
                 <p className="-mt-3">{calculateRating(reviews)}</p>
                 {movie.Ratings.map((rating) => (
                   <a
@@ -102,36 +108,43 @@ export default function MovieDetails() {
             </div>
           </div>
         </div>
-        {user.name ? reviewByCurrentUser ? (
-          <div className="mb-8">
-            {isEditModeOn ? <>
-              <EditReviewForm
-                currentReview={reviewByCurrentUser}
-                setCurrentReview={setReviewByCurrentUser}
-                reviews={reviews}
-                setReviews={setReviews}
-                setIsEditModeOn={setIsEditModeOn}
-              />
-
-            </> : <>
-              <p className="text-2xl font-semibold mb-2">Your review</p>
-              <ReviewCard review={reviewByCurrentUser} isEditable={true} refreshReviews={refreshReviewsOnDelete} setIsEditModeOn={setIsEditModeOn} />
-            </>}
-
-          </div>)
-          : (
+        {user.name ? (
+          reviewByCurrentUser ? (
+            <div className="mb-8">
+              {isEditModeOn ? (
+                <>
+                  <EditReviewForm
+                    currentReview={reviewByCurrentUser}
+                    setCurrentReview={setReviewByCurrentUser}
+                    reviews={reviews}
+                    setReviews={setReviews}
+                    setIsEditModeOn={setIsEditModeOn}
+                  />
+                </>
+              ) : (
+                <>
+                  <p className="text-2xl font-semibold mb-2">Your review</p>
+                  <ReviewCard
+                    review={reviewByCurrentUser}
+                    isEditable={true}
+                    refreshReviews={refreshReviewsOnDelete}
+                    setIsEditModeOn={setIsEditModeOn}
+                  />
+                </>
+              )}
+            </div>
+          ) : (
             <AddReviewForm
               movie={movie}
               setReviews={setReviews}
               setCurrentReview={setReviewByCurrentUser}
             />
-          ) : (
+          )
+        ) : (
           <p className="text-xl mb-8">Log in to write a review.</p>
         )}
 
-        <ReviewList
-          reviews={reviews}
-        />
+        <ReviewList reviews={reviews} />
       </>
     );
 }

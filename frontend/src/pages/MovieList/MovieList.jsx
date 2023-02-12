@@ -10,7 +10,9 @@ export default function MoviesList({ movies, error }) {
   return (
     <>
       {error ? (
-        <div className="bg-red-100 w-full p-3 rounded-lg -mt-2"><p className="text-red-600">Error: {error}</p></div>
+        <div className="bg-red-100 w-full p-3 rounded-lg -mt-2">
+          <p className="text-red-600">Error: {error}</p>
+        </div>
       ) : (
         <div className="grid grid-cols-2 gap-6 mb-8">
           {movies.map((movie) => (
