@@ -53,6 +53,14 @@ const getReviewsByMovieId = asyncHandler(async (req, res) => {
   res.status(200).json(reviewsById);
 });
 
+const getReviewsByUser = asyncHandler(async (req, res) => {
+  const reviewsByUser = await Review.find({
+    userId: req.params.userId,
+  }).sort({ createdAt: -1 });
+
+  res.status(200).json(reviewsByUser);
+});
+
 const getReviewByMovieIdAndUser = asyncHandler(async (req, res) => {
   const reviewByIdAndUser = await Review.find({
     movieId: req.params.movieId,
@@ -69,4 +77,5 @@ module.exports = {
   deleteReview,
   getReviewsByMovieId,
   getReviewByMovieIdAndUser,
+  getReviewsByUser,
 };

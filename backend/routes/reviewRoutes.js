@@ -7,6 +7,7 @@ const {
   deleteReview,
   getReviewsByMovieId,
   getReviewByMovieIdAndUser,
+  getReviewsByUser,
 } = require("../controllers/reviewController");
 
 router.route("/").get(getReviews).post(postReview);
@@ -15,6 +16,7 @@ router
   .get(getReviewsByMovieId)
   .put(updateReview)
   .delete(deleteReview);
+router.route("/user/:userId").get(getReviewsByUser);
 router.route("/:userId/:movieId").get(getReviewByMovieIdAndUser);
 
 module.exports = router;

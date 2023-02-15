@@ -53,7 +53,10 @@ function Reviews({ recentReviews }) {
       className="rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer"
     >
       <div className="flex">
-        <div className="relative center text-white">
+        <div
+          className="relative center text-white"
+          onClick={() => navigate(routes.USER(review.userId))}
+        >
           <img
             src={review.avatar}
             alt="avatar"
@@ -75,10 +78,8 @@ function Reviews({ recentReviews }) {
             {review.createdAt === review.updatedAt ? (
               dateFormatter(review.createdAt)
             ) : (
-              <span className="mr-1">
-                Edited: {dateFormatter(review.updatedAt)}
-              </span>
-            )}
+              <span>Edited: {dateFormatter(review.updatedAt)}</span>
+            )}{" "}
             by {review.user}
           </p>
           {review.description && <p className="mt-2">{review.description}</p>}

@@ -8,6 +8,7 @@ import MovieList from "./pages/MovieList/MovieList";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { routes } from "./api/paths";
 import MovieDetails from "./pages/MovieDetails/MovieDetails";
+import UserDetails from "./pages/UserDetails/UserDetails";
 import { UserContext } from "./UserContext";
 
 export default function App() {
@@ -53,6 +54,7 @@ export default function App() {
               element={<MovieList movies={movies} error={error} />}
             />
             <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/user/:id" element={<UserDetails />} />
           </Routes>
         </div>
       </BrowserRouter>
