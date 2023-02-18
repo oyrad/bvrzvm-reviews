@@ -34,11 +34,11 @@ export default function Dashboard() {
       <Reviews recentReviews={currentItems} />
       <ReactPaginate
         breakLabel="..."
-        nextLabel="next >"
+        nextLabel=">"
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
-        previousLabel="< previous"
+        previousLabel="<"
         renderOnZeroPageCount={null}
       />
     </>
@@ -54,13 +54,13 @@ function Reviews({ recentReviews }) {
     >
       <div className="flex">
         <div
-          className="relative center text-white"
+          className="relative center text-white bg-black rounded-l-lg"
           onClick={() => navigate(routes.USER(review.userId))}
         >
           <img
             src={review.avatar}
             alt="avatar"
-            className="rounded-l-lg w-28 opacity-60"
+            className="rounded-l-lg w-28 opacity-70"
             referrerPolicy="no-referrer"
           />
           <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl text-shadow">

@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { dateFormatter } from "../util/dateFormatter";
+
+import { routes } from "../api/paths";
 
 export default function ReviewCard({
   review,
@@ -8,6 +11,8 @@ export default function ReviewCard({
   refreshReviews,
   setIsEditModeOn,
 }) {
+  const navigate = useNavigate();
+
   function handleDelete() {
     fetch(`/api/reviews/${review._id}`, {
       method: "DELETE",
@@ -21,7 +26,8 @@ export default function ReviewCard({
         <img
           src={review.avatar}
           alt="avatar"
-          className="w-28 rounded-l-lg mr-1"
+          className="w-28 rounded-l-lg mr-1 cursor-pointer hover:opacity-90"
+          onClick={() => navigate(routes.USER(review.userId))}
         />
         <div className="flex items-center">
           <div className="flex flex-col p-4">

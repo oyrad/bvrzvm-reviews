@@ -88,12 +88,17 @@ export default function Header({ setMovies, setError }) {
         </form>
         {user.displayName ? (
           <>
-            <img
-              src={user.photos[0].value}
-              alt="avatar"
-              className="w-10 mr-2 rounded-full"
-            />
-            <p className="mr-8">{user.displayName}</p>
+            <div
+              className="flex items-center cursor-pointer hover:opacity-90"
+              onClick={() => navigate(routes.USER(user.id))}
+            >
+              <img
+                src={user.photos[0].value}
+                alt="avatar"
+                className="w-10 mr-2 rounded-full"
+              />
+              <p className="mr-8">{user.displayName}</p>
+            </div>
             <p onClick={logout} className="cursor-pointer">
               Log out
             </p>
