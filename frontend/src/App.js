@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import { routes } from "./api/paths";
 import MovieDetails from "./pages/MovieDetails/MovieDetails";
 import UserDetails from "./pages/UserDetails/UserDetails";
+import NotFound from "./pages/NotFound/NotFound";
 import { UserContext } from "./UserContext";
 
 export default function App() {
@@ -55,6 +56,7 @@ export default function App() {
             />
             <Route path="/movie/:id" element={<MovieDetails />} />
             <Route path="/user/:id" element={<UserDetails />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>

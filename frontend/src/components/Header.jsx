@@ -28,6 +28,7 @@ export default function Header({ setMovies, setError }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setMovies([]);
     setError(undefined);
     const res = await fetch(
       `http://www.omdbapi.com/?apikey=c370deb2&s=${query}&type=movie`

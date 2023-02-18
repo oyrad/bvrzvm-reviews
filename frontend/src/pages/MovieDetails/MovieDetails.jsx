@@ -73,7 +73,7 @@ export default function MovieDetails() {
                 </span>
                 {movie.Writer}
               </p>
-              <p className="mb-4 w-3/4">{movie.Plot}</p>
+              <p className="mb-4 w-3/4">{movie.Plot.substring(0, 500)}</p>
             </div>
             <div>
               <p className="font-semibold mb-2">Ratings:</p>

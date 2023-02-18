@@ -1,8 +1,11 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { routes } from "../../api/paths";
 
 export default function UserDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [reviews, setReviews] = React.useState([]);
   const [userName, setUserName] = React.useState("");
   const [avatar, setAvatar] = React.useState("");
