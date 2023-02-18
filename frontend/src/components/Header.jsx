@@ -2,14 +2,14 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import Search from "./Search";
 import { routes } from "../api/paths";
 import { UserContext } from "../UserContext";
 
 import logo from "../images/burzum-logo.jpg";
 
-export default function Header({ setMovies, setError }) {
+export default function Header({ setMovies, setError, query, setQuery }) {
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const [query, setQuery] = React.useState("");
 
   const navigate = useNavigate();
   const { user } = React.useContext(UserContext);
@@ -26,23 +26,6 @@ export default function Header({ setMovies, setError }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setMovies([]);
-    setError(undefined);
-    const res = await fetch(
-      `http://www.omdbapi.com/?apikey=c370deb2&s=${query}&type=movie`
-    );
-    const data = await res.json();
-
-    if (data.Response === "True") {
-      setMovies(data.Search);
-    } else {
-      setError(data.Error);
-    }
-    navigate(routes.SEARCH(query));
-  }
-
   function googleAuth() {
     window.open("http://localhost:4420/auth/google", "_self");
   }
@@ -53,39 +36,30 @@ export default function Header({ setMovies, setError }) {
 
   return (
     <header
-      className={`flex justify-between items-center py-4 px-80 mb-8 sticky top-0 z-50 w-full bg-white ${
+      className={`2xl:px-72 xl:px-60 lg:px-28 md:px-8 px-4 flex justify-between items-center py-4 mb-4 sm:mb-8 sticky top-0 z-50 w-full bg-white ${
         isScrolled && "shadow-lg"
       }`}
     >
       <div
-        className="flex items-end cursor-pointer"
+        className="flex flex-col lg:flex-row items-end cursor-pointer mt-1 lg:mt-0"
         onClick={() => {
           setQuery("");
           navigate(routes.DASHBOARD);
         }}
       >
         <img src={logo} alt="burzum" className="w-44" />
-        <p className="text-xl font-semibold pb-0.5">reviews</p>
+        <p className="text-lg lg:text-xl font-semibold -mt-1.5 lg:ml-1 lg:-mb-1">
+          reviews
+        </p>
       </div>
       <div className="flex items-center">
-        <form onSubmit={handleSubmit} className="flex mr-8">
-          <input
-            value={query}
-            name="search"
-            type="text"
-            autoComplete="off"
-            placeholder="Search for movies..."
-            className="border rounded-full px-4 py-1.5 mr-2 outline-0"
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="btn btn-inverse"
-            disabled={query === ""}
-          >
-            Search
-          </button>
-        </form>
+        <Search
+          setMovies={setMovies}
+          setError={setError}
+          query={query}
+          setQuery={setQuery}
+          className="hidden sm:block mr-4 lg:mr-8"
+        />
         {user.displayName ? (
           <>
             <div
@@ -95,9 +69,9 @@ export default function Header({ setMovies, setError }) {
               <img
                 src={user.photos[0].value}
                 alt="avatar"
-                className="w-10 mr-2 rounded-full"
+                className="w-10 mr-4 sm:mr-2 rounded-full"
               />
-              <p className="mr-8">{user.displayName}</p>
+              <p className="mr-4 lg:mr-8 hidden md:block">{user.displayName}</p>
             </div>
             <p onClick={logout} className="cursor-pointer">
               Log out

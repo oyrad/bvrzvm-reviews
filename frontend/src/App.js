@@ -11,10 +11,12 @@ import MovieDetails from "./pages/MovieDetails/MovieDetails";
 import UserDetails from "./pages/UserDetails/UserDetails";
 import NotFound from "./pages/NotFound/NotFound";
 import { UserContext } from "./UserContext";
+import Search from "./components/Search";
 
 export default function App() {
   const [movies, setMovies] = React.useState([]);
   const [error, setError] = React.useState(undefined);
+  const [query, setQuery] = React.useState("");
   const [user, setUser] = React.useState({});
 
   React.useEffect(() => {
@@ -46,8 +48,20 @@ export default function App() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
-        <Header setMovies={setMovies} setError={setError} />
-        <div className="px-80">
+        <Header
+          setMovies={setMovies}
+          setError={setError}
+          query={query}
+          setQuery={setQuery}
+        />
+        <Search
+          setMovies={setMovies}
+          setError={setError}
+          query={query}
+          setQuery={setQuery}
+          className="sm:hidden w-full px-4 mb-4"
+        />
+        <div className="2xl:px-72 xl:px-60 lg:px-28 md:px-8 px-4">
           <Routes>
             <Route path={routes.DASHBOARD} element={<Dashboard />} />
             <Route
