@@ -36,7 +36,7 @@ export default function Header({ setMovies, setError, query, setQuery }) {
 
   return (
     <header
-      className={`2xl:px-72 xl:px-60 lg:px-28 md:px-8 px-4 flex justify-between items-center py-4 mb-4 sm:mb-8 sticky top-0 z-50 w-full bg-white ${
+      className={`2xl:px-72 xl:px-60 lg:px-28 md:px-8 px-4 flex justify-between items-center py-3 md:py-4 mb-4 sm:mb-8 sticky top-0 z-50 w-full bg-white ${
         isScrolled && "shadow-lg"
       }`}
     >
