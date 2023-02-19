@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useParams } from "react-router-dom";
-import { calculateRating } from "../../util/calculateRating";
+import { calculateRating } from "../../util/ratingsUtil";
 import AddReviewForm from "./components/AddReviewForm";
 import ReviewList from "./components/ReviewList";
 import { UserContext } from "../../UserContext";

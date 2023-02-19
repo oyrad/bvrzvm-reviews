@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { routes } from "../../api/paths";
-import { calculateRating } from "../../util/calculateRating";
+import { calculateRating } from "../../util/ratingsUtil";
 import { dateFormatter } from "../../util/dateFormatter";
 import { findHighestRated, findLowestRated } from "../../util/findByRating";
 
