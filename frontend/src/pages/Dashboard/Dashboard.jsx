@@ -5,26 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "../../api/paths";
 import { dateFormatter } from "../../util/dateFormatter";
 import ReactPaginate from "react-paginate";
+import { getColorFromRating } from "../../util/ratingsUtil";
 
 export default function Dashboard() {
   const [recentReviews, setRecentReviews] = React.useState([]);
   const [itemOffset, setItemOffset] = React.useState(0);
 
   React.useEffect(() => {
-    async function getRecentReviews() {
-      const res = await fetch("/api/reviews");
-      const data = await res.json();
-      setRecentReviews(data);
-    }
-    getRecentReviews();
+    fetch("/api/reviews")
+      .then((res) => res.json())
+      .then((data) => setRecentReviews(data))
+      .catch((err) => console.log(err));
   }, []);
 
-  const endOffset = itemOffset + 7;
+  const itemsPerPage = 10;
+  const endOffset = itemOffset + itemsPerPage;
   const currentItems = recentReviews.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(recentReviews.length / 7);
+  const pageCount = Math.ceil(recentReviews.length / itemsPerPage);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * 7) % recentReviews.length;
+    const newOffset = (event.selected * itemsPerPage) % recentReviews.length;
     setItemOffset(newOffset);
   };
 
@@ -34,12 +34,45 @@ export default function Dashboard() {
       <Reviews recentReviews={currentItems} />
       <ReactPaginate
         breakLabel="..."
-        nextLabel=">"
+        nextLabel={
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 hover:text-gray-500 -ml-1"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        }
+        previousLabel={
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 hover:text-gray-500 -mr-1"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
+        }
         onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
+        pageRangeDisplayed={3}
         pageCount={pageCount}
-        previousLabel="<"
         renderOnZeroPageCount={null}
+        className="flex space-x-3 md:space-x-6 justify-center items-center mb-4 bg-white rounded-lg p-2 text-lg"
+        activeClassName="font-bold"
+        pageClassName="hover:text-gray-500"
       />
     </>
   );
@@ -50,20 +83,22 @@ function Reviews({ recentReviews }) {
   return recentReviews.map((review) => (
     <div
       key={review._id}
-      className="rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer"
+      className="rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none"
+      style={{ borderColor: getColorFromRating(review.rating) }}
     >
       <div className="flex">
         <div
-          className="relative center text-white bg-black hover:bg-white rounded-l-lg"
+          className="hidden md:block md:relative center text-white bg-black hover:bg-white md:rounded-l-lg border-r-4"
           onClick={() => navigate(routes.USER(review.userId))}
+          style={{ borderColor: getColorFromRating(review.rating) }}
         >
           <img
             src={review.avatar}
             alt="avatar"
-            className="rounded-l-lg w-28 opacity-70 hover:opacity-80"
+            className="md:w-36 lg:w-32 max-w-[10rem] rounded-l-lg opacity-70 hover:opacity-80"
             referrerPolicy="no-referrer"
           />
-          <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl text-shadow">
+          <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
             {review.rating}
           </p>
         </div>
@@ -71,21 +106,33 @@ function Reviews({ recentReviews }) {
           className="flex flex-col justify-center p-4"
           onClick={() => navigate(routes.MOVIE(review.movieId))}
         >
-          <p className="text-xl">
-            <span className="font-semibold">{review.movieName}</span> (
-            {review.movieYear})
-          </p>
-          <p className="text-xs text-gray-500 italic">
-            {review.createdAt === review.updatedAt ? (
-              dateFormatter(review.createdAt)
-            ) : (
-              <span>Edited: {dateFormatter(review.updatedAt)}</span>
-            )}{" "}
-            by {review.user}
-          </p>
-          {review.description && <p className="mt-2">{review.description}</p>}
+          <div className="flex md:flex-col md:items-start items-center">
+            <p className="ml-1 mr-4 text-4xl md:hidden">{review.rating}</p>
+            <div>
+              <p className="text-lg md:text-xl">
+                <span className="font-semibold">{review.movieName}</span> (
+                {review.movieYear})
+              </p>
+              <p className="text-xs text-gray-500 italic">
+                {review.createdAt === review.updatedAt ? (
+                  dateFormatter(review.createdAt)
+                ) : (
+                  <span>Edited: {dateFormatter(review.updatedAt)}</span>
+                )}{" "}
+                by {review.user}
+              </p>
+            </div>
+            {review.description && (
+              <p className="mt-2 text-sm hidden md:block">
+                {review.description}
+              </p>
+            )}
+          </div>
         </div>
       </div>
+      {review.description && (
+        <p className="text-sm p-4 pt-0 block md:hidden">{review.description}</p>
+      )}
     </div>
   ));
 }
