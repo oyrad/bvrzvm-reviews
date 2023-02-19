@@ -71,7 +71,7 @@ export default function UserDetails() {
               <img
                 src={review.moviePoster}
                 alt="poster"
-                className="w-24 rounded-l-lg opacity-60"
+                className="w-28 rounded-l-lg opacity-60"
               />
               <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl text-shadow">
                 {review.rating}
@@ -90,7 +90,7 @@ export default function UserDetails() {
                 )}
               </p>
               {review.description && (
-                <p className="mt-2">{review.description}</p>
+                <p className="mt-2 text-sm xl:pr-4">{review.description}</p>
               )}
             </div>
           </div>

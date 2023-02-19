@@ -40,7 +40,12 @@ body {
 .btn-inverse {
   background-color: white;
   color: black;
-  border: 1px solid black;
+  border: 1px solid #666;
+}
+
+.btn-danger {
+  background-color: #dc2626;
+  color: white;
 }
 
 input::-webkit-outer-spin-button,
@@ -51,4 +56,13 @@ input::-webkit-inner-spin-button {
 
 .text-shadow {
   text-shadow: 2px 2px 4px #000;
+}
+
+@media (max-width: 640px) {
+  .btn {
+    padding: 2px 16px;
+    margin-right: 8px;
+    outline: none;
+    border-radius: 9999px;
+  }
 }
