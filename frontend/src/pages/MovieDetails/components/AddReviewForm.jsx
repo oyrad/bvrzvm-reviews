@@ -50,7 +50,7 @@ export default function AddReviewForm({ movie, setReviews, setCurrentReview }) {
                 <input
                   type="number"
                   step="any"
-                  min="0"
+                  min="1"
                   max="10"
                   name="rating"
                   className="w-12 form-input mr-2"
