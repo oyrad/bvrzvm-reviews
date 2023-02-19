@@ -31,23 +31,32 @@ export default function Search({
 
   return (
     <form onSubmit={handleSubmit} className={className}>
-      <input
-        value={query}
-        name="search"
-        type="text"
-        autoComplete="off"
-        placeholder="Search for movies..."
-        className="border w-full rounded-full px-4 py-1.5 mr-2 outline-0"
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      {/* <button
-          type="submit"
-          className="btn btn-inverse"
-          disabled={query === ""}
-          hidden
+      <div className="flex items-center">
+        <input
+          value={query}
+          name="search"
+          type="text"
+          autoComplete="off"
+          placeholder="Search for movies..."
+          className="border w-full rounded-full px-4 py-1.5 mr-2 outline-0"
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5 -ml-10 cursor-pointer text-gray-600"
+          onClick={query !== "" && handleSubmit}
         >
-          Search
-        </button> */}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+          />
+        </svg>
+      </div>
     </form>
   );
 }
