@@ -67,11 +67,11 @@ export default function UserDetails() {
             onClick={() => navigate(routes.MOVIE(review.movieId))}
             key={review._id}
           >
-            <div className="relative center text-white bg-black rounded-l-lg">
+            <div className="max-w-[7rem] relative center text-white bg-black rounded-l-lg">
               <img
                 src={review.moviePoster}
                 alt="poster"
-                className="w-28 rounded-l-lg opacity-60"
+                className="rounded-l-lg opacity-60"
               />
               <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl text-shadow">
                 {review.rating}

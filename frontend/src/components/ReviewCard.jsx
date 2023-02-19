@@ -40,32 +40,37 @@ export default function ReviewCard({
       )}
       <div className="rounded-lg shadow bg-white mb-4">
         <div className="flex justify-between items-center">
-          <div className="flex p-3 lg:p-0">
+          <div className="flex">
             <div
-              className="relative center text-white bg-black hover:bg-white rounded-full lg:rounded-none lg:rounded-l-lg cursor-pointer"
+              className="md:relative center text-white bg-black hover:bg-white rounded-l-lg cursor-pointer"
               onClick={() => navigate(routes.USER(review.userId))}
             >
               <img
                 src={review.avatar}
                 alt="avatar"
-                className="w-20 lg:w-28 rounded-full lg:rounded-none lg:rounded-l-lg opacity-70 hover:opacity-80"
+                className="hidden md:block w-36 lg:w-32 max-w-[10rem] rounded-l-lg opacity-70 hover:opacity-80"
                 referrerPolicy="no-referrer"
               />
-              <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl lg:text-5xl text-shadow">
+              <p className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl md:text-5xl text-shadow">
                 {review.rating}
               </p>
             </div>
             <div className="flex flex-col p-4 justify-center">
-              <p className="font-semibold text-lg mr-2">{review.user}</p>
-              <p className="text-xs text-gray-500 italic">
-                {review.createdAt === review.updatedAt ? (
-                  dateFormatter(review.createdAt)
-                ) : (
-                  <span>Edited: {dateFormatter(review.updatedAt)}</span>
-                )}
-              </p>
+              <div className="flex items-center">
+                <p className="text-4xl mr-4 md:hidden">{review.rating}</p>
+                <div>
+                  <p className="font-semibold text-lg mr-2">{review.user}</p>
+                  <p className="text-xs text-gray-500 italic">
+                    {review.createdAt === review.updatedAt ? (
+                      dateFormatter(review.createdAt)
+                    ) : (
+                      <span>Edited: {dateFormatter(review.updatedAt)}</span>
+                    )}
+                  </p>
+                </div>
+              </div>
               {review.description && (
-                <p className="mt-2 text-sm hidden lg:block">
+                <p className="mt-2 text-sm hidden md:block">
                   {review.description}
                 </p>
               )}
@@ -73,7 +78,7 @@ export default function ReviewCard({
           </div>
         </div>
         {review.description && (
-          <p className="text-sm p-4 pt-0 block lg:hidden">
+          <p className="text-sm p-4 pt-0 block md:hidden">
             {review.description}
           </p>
         )}
