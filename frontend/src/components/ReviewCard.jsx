@@ -41,12 +41,12 @@ export default function ReviewCard({
       <div
         className="rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none"
         style={{ borderColor: getColorFromRating(review.rating) }}
+        onClick={() => navigate(routes.USER(review.userId))}
       >
         <div className="flex justify-between items-center">
           <div className="flex">
             <div
               className="hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition"
-              onClick={() => navigate(routes.USER(review.userId))}
               style={{ borderColor: getColorFromRating(review.rating) }}
             >
               <img

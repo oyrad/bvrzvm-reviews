@@ -2,11 +2,11 @@ import React from "react";
 
 import { useParams } from "react-router-dom";
 import { calculateRating } from "../../util/ratingsUtil";
-import AddReviewForm from "./components/AddReviewForm";
+import AddReview from "./components/AddReview";
+import EditReview from "./components/EditReview";
 import ReviewList from "./components/ReviewList";
 import { UserContext } from "../../UserContext";
 import ReviewCard from "../../components/ReviewCard";
-import EditReviewForm from "./components/EditReviewForm";
 
 import burzum from "../../images/burzum-logo.jpg";
 import imdb from "../../images/imdb-logo.webp";
@@ -99,7 +99,7 @@ export default function MovieDetails() {
             <div className="mb-8">
               {isEditModeOn ? (
                 <>
-                  <EditReviewForm
+                  <EditReview
                     currentReview={reviewByCurrentUser}
                     setCurrentReview={setReviewByCurrentUser}
                     reviews={reviews}
@@ -119,7 +119,7 @@ export default function MovieDetails() {
               )}
             </div>
           ) : (
-            <AddReviewForm
+            <AddReview
               movie={movie}
               setReviews={setReviews}
               setCurrentReview={setReviewByCurrentUser}
