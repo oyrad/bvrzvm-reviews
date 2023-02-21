@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { routes } from "../../api/paths";
 import { calculateRating } from "../../util/ratingsUtil";
-import { dateFormatter } from "../../util/dateFormatter";
 import { findHighestRated, findLowestRated } from "../../util/findByRating";
+import { UserContext } from "../../UserContext";
 
 export default function UserDetails() {
   const { id } = useParams();
@@ -13,22 +13,45 @@ export default function UserDetails() {
   const [reviews, setReviews] = React.useState([]);
   const [userName, setUserName] = React.useState("");
   const [avatar, setAvatar] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [hasNoReviews, setHasNoReviews] = React.useState(false);
+
+  const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     fetch(`/api/reviews/user/${id}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+        if (data.length === 0) {
+          return setHasNoReviews(true);
+        }
         setReviews(data);
         setUserName(data[0].user);
         setAvatar(data[0].avatar);
-        setIsLoading(false);
       })
       .catch((err) => console.log(err));
   }, [id]);
 
-  if (isLoading) {
-    return <></>;
+  console.log(user);
+
+  if (hasNoReviews) {
+    return (
+      <div className="bg-white rounded-lg flex items-center mb-6 shadow">
+        <img
+          src={user.photos[0].value}
+          alt="avatar"
+          className="rounded-l-lg w-36"
+          referrerPolicy="no-referrer"
+        />
+        <div className="flex flex-col p-4">
+          <p className="text-xl font-semibold">{user.displayName}</p>
+          <p className="text-sm">
+            Total reviews:
+            <span className="font-medium ml-1">{reviews.length}</span>
+          </p>
+        </div>
+      </div>
+    );
   } else {
     return (
       <>
@@ -84,9 +107,16 @@ export default function UserDetails() {
               </p>
               <p className="text-xs text-gray-500 italic">
                 {review.createdAt === review.updatedAt ? (
-                  dateFormatter(review.createdAt)
+                  new Date(review.createdAt)
+                    .toLocaleString("hr-HR")
+                    .substring(0, 19)
                 ) : (
-                  <span>Edited: {dateFormatter(review.updatedAt)}</span>
+                  <span>
+                    Edited:{" "}
+                    {new Date(review.updatedAt)
+                      .toLocaleString("hr-HR")
+                      .substring(0, 19)}
+                  </span>
                 )}
               </p>
               {review.description && (

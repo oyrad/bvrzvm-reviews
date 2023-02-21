@@ -48,7 +48,7 @@ export default function Search({
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-5 h-5 -ml-10 cursor-pointer text-gray-600"
-          onClick={query !== "" && handleSubmit}
+          onClick={query !== "" ? handleSubmit : () => {}}
         >
           <path
             strokeLinecap="round"

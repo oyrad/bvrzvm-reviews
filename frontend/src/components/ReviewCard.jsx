@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { dateFormatter } from "../util/dateFormatter";
 import { getColorFromRating } from "../util/ratingsUtil";
 
 import { routes } from "../api/paths";
@@ -67,9 +66,16 @@ export default function ReviewCard({
                   <p className="font-semibold text-lg mr-2">{review.user}</p>
                   <p className="text-xs text-gray-500 italic">
                     {review.createdAt === review.updatedAt ? (
-                      dateFormatter(review.createdAt)
+                      new Date(review.createdAt)
+                        .toLocaleString("hr-HR")
+                        .substring(0, 19)
                     ) : (
-                      <span>Edited: {dateFormatter(review.updatedAt)}</span>
+                      <span>
+                        Edited:{" "}
+                        {new Date(review.updatedAt)
+                          .toLocaleString("hr-HR")
+                          .substring(0, 19)}
+                      </span>
                     )}
                   </p>
                 </div>

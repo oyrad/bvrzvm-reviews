@@ -3,7 +3,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { routes } from "../../api/paths";
-import { dateFormatter } from "../../util/dateFormatter";
 import ReactPaginate from "react-paginate";
 import { getColorFromRating } from "../../util/ratingsUtil";
 
@@ -88,14 +87,14 @@ function Reviews({ recentReviews }) {
     >
       <div className="flex">
         <div
-          className="hidden md:block md:relative center text-white bg-black hover:bg-white md:rounded-l-lg border-r-4"
+          className="hidden md:block md:relative center text-white bg-black hover:bg-gray-500 md:rounded-l-lg border-r-4 transition"
           onClick={() => navigate(routes.USER(review.userId))}
           style={{ borderColor: getColorFromRating(review.rating) }}
         >
           <img
             src={review.avatar}
             alt="avatar"
-            className="md:w-36 lg:w-32 max-w-[10rem] rounded-l-lg opacity-70 hover:opacity-80"
+            className="md:w-36 lg:w-32 max-w-[10rem] rounded-l-lg opacity-70"
             referrerPolicy="no-referrer"
           />
           <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
@@ -114,12 +113,19 @@ function Reviews({ recentReviews }) {
                 {review.movieYear})
               </p>
               <p className="text-xs text-gray-500 italic">
+                {review.user} -&nbsp;
                 {review.createdAt === review.updatedAt ? (
-                  dateFormatter(review.createdAt)
+                  new Date(review.createdAt)
+                    .toLocaleString("hr-HR")
+                    .substring(0, 19)
                 ) : (
-                  <span>Edited: {dateFormatter(review.updatedAt)}</span>
-                )}{" "}
-                by {review.user}
+                  <span>
+                    Edited:{" "}
+                    {new Date(review.updatedAt)
+                      .toLocaleString("hr-HR")
+                      .substring(0, 19)}
+                  </span>
+                )}
               </p>
             </div>
             {review.description && (
