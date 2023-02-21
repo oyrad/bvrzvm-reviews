@@ -45,14 +45,14 @@ export default function ReviewCard({
         <div className="flex justify-between items-center">
           <div className="flex">
             <div
-              className="hidden md:block md:relative center text-white bg-black hover:bg-white md:rounded-l-lg border-r-4"
+              className="hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition"
               onClick={() => navigate(routes.USER(review.userId))}
               style={{ borderColor: getColorFromRating(review.rating) }}
             >
               <img
                 src={review.avatar}
                 alt="avatar"
-                className="w-36 lg:w-32 max-w-[10rem] rounded-l-lg opacity-70 hover:opacity-80"
+                className="w-36 lg:w-32 max-w-[10rem] rounded-l-lg opacity-70"
                 referrerPolicy="no-referrer"
               />
               <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
@@ -81,7 +81,7 @@ export default function ReviewCard({
                 </div>
               </div>
               {review.description && (
-                <p className="mt-2 text-sm hidden md:block">
+                <p className="mt-2 text-sm hidden md:block break-all">
                   {review.description}
                 </p>
               )}
@@ -89,7 +89,7 @@ export default function ReviewCard({
           </div>
         </div>
         {review.description && (
-          <p className="text-sm p-4 pt-0 block md:hidden">
+          <p className="text-sm p-4 pt-0 block md:hidden break-all">
             {review.description}
           </p>
         )}

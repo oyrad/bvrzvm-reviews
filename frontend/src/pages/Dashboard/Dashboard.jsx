@@ -87,7 +87,7 @@ function Reviews({ recentReviews }) {
     >
       <div className="flex">
         <div
-          className="hidden md:block md:relative center text-white bg-black hover:bg-gray-500 md:rounded-l-lg border-r-4 transition"
+          className="hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition"
           onClick={() => navigate(routes.USER(review.userId))}
           style={{ borderColor: getColorFromRating(review.rating) }}
         >
@@ -129,7 +129,7 @@ function Reviews({ recentReviews }) {
               </p>
             </div>
             {review.description && (
-              <p className="mt-2 text-sm hidden md:block">
+              <p className="mt-2 text-sm hidden md:block break-all">
                 {review.description}
               </p>
             )}
@@ -137,7 +137,9 @@ function Reviews({ recentReviews }) {
         </div>
       </div>
       {review.description && (
-        <p className="text-sm p-4 pt-0 block md:hidden">{review.description}</p>
+        <p className="text-sm p-4 pt-0 block md:hidden break-all">
+          {review.description}
+        </p>
       )}
     </div>
   ));

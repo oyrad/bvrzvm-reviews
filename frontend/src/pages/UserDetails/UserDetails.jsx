@@ -5,6 +5,7 @@ import { routes } from "../../api/paths";
 import { calculateRating } from "../../util/ratingsUtil";
 import { findHighestRated, findLowestRated } from "../../util/findByRating";
 import { UserContext } from "../../UserContext";
+import { getColorFromRating } from "../../util/ratingsUtil";
 
 export default function UserDetails() {
   const { id } = useParams();
@@ -14,6 +15,7 @@ export default function UserDetails() {
   const [userName, setUserName] = React.useState("");
   const [avatar, setAvatar] = React.useState("");
   const [hasNoReviews, setHasNoReviews] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const { user } = React.useContext(UserContext);
 
@@ -21,111 +23,167 @@ export default function UserDetails() {
     fetch(`/api/reviews/user/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.length === 0) {
-          return setHasNoReviews(true);
+          setHasNoReviews(true);
         }
         setReviews(data);
         setUserName(data[0].user);
         setAvatar(data[0].avatar);
+        setIsLoading(false);
       })
       .catch((err) => console.log(err));
   }, [id]);
 
-  console.log(user);
-
-  if (hasNoReviews) {
+  if (isLoading) {
+    return <></>;
+  } else if (hasNoReviews) {
     return (
-      <div className="bg-white rounded-lg flex items-center mb-6 shadow">
-        <img
-          src={user.photos[0].value}
-          alt="avatar"
-          className="rounded-l-lg w-36"
-          referrerPolicy="no-referrer"
-        />
-        <div className="flex flex-col p-4">
-          <p className="text-xl font-semibold">{user.displayName}</p>
-          <p className="text-sm">
-            Total reviews:
-            <span className="font-medium ml-1">{reviews.length}</span>
-          </p>
-        </div>
-      </div>
+      <UserCard
+        avatar={user.photos[0].value}
+        name={user.displayName}
+        reviews={reviews}
+        showRatings={false}
+      />
     );
   } else {
     return (
       <>
-        <div className="bg-white rounded-lg flex items-center mb-6 shadow">
-          <img src={avatar} alt="avatar" className="rounded-l-lg w-36" />
-          <div className="flex flex-col p-4">
-            <p className="text-xl font-semibold">{userName}</p>
-            <p className="text-sm">
-              Total reviews:
-              <span className="font-medium ml-1">{reviews.length}</span>
-            </p>
-            <p className="text-sm">
-              Average rating:
-              <span className="font-medium ml-1">
-                {calculateRating(reviews)}
-              </span>
-            </p>
-            <p className="text-sm">
-              Highest rated:
-              <span className="font-medium ml-1">
-                {findHighestRated(reviews)}
-              </span>
-            </p>
-            <p className="text-sm">
-              Lowest rated:
-              <span className="font-medium ml-1">
-                {findLowestRated(reviews)}
-              </span>
-            </p>
-          </div>
-        </div>
+        <UserCard
+          avatar={avatar}
+          name={userName}
+          reviews={reviews}
+          showRatings
+        />
         <p className="text-2xl font-semibold mb-4">Reviews</p>
         {reviews.map((review) => (
           <div
-            className="bg-white rounded-lg flex items-center mb-4 cursor-pointer shadow"
+            className="bg-white rounded md:rounded-lg flex items-center mb-4 cursor-pointer shadow border-l-4 md:border-none"
             onClick={() => navigate(routes.MOVIE(review.movieId))}
+            style={{ borderColor: getColorFromRating(review.rating) }}
             key={review._id}
           >
-            <div className="max-w-[7rem] relative center text-white bg-black rounded-l-lg">
+            <div
+              className="hidden md:block min-w-[8rem] max-w-[8rem] relative center text-white bg-black hover:bg-gray-700 transition rounded-l-lg border-r-4"
+              style={{ borderColor: getColorFromRating(review.rating) }}
+            >
               <img
                 src={review.moviePoster}
                 alt="poster"
                 className="rounded-l-lg opacity-60"
               />
-              <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl text-shadow">
+              <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
                 {review.rating}
               </p>
             </div>
             <div className="p-4">
-              <p className="text-xl">
-                <span className="font-semibold">{review.movieName}</span> (
-                {review.movieYear})
-              </p>
-              <p className="text-xs text-gray-500 italic">
-                {review.createdAt === review.updatedAt ? (
-                  new Date(review.createdAt)
-                    .toLocaleString("hr-HR")
-                    .substring(0, 19)
-                ) : (
-                  <span>
-                    Edited:{" "}
-                    {new Date(review.updatedAt)
-                      .toLocaleString("hr-HR")
-                      .substring(0, 19)}
-                  </span>
-                )}
-              </p>
+              <div className="flex items-center">
+                <p className="ml-1 mr-4 text-4xl md:hidden">{review.rating}</p>
+                <div>
+                  <p className="text-xl">
+                    <span className="font-semibold">{review.movieName}</span> (
+                    {review.movieYear})
+                  </p>
+                  <p className="text-xs text-gray-500 italic">
+                    {review.createdAt === review.updatedAt ? (
+                      new Date(review.createdAt)
+                        .toLocaleString("hr-HR")
+                        .substring(0, 19)
+                    ) : (
+                      <span>
+                        Edited:{" "}
+                        {new Date(review.updatedAt)
+                          .toLocaleString("hr-HR")
+                          .substring(0, 19)}
+                      </span>
+                    )}
+                  </p>
+                </div>
+              </div>
               {review.description && (
-                <p className="mt-2 text-sm xl:pr-4">{review.description}</p>
+                <p className="mt-2 text-sm xl:pr-4  break-all">
+                  {review.description}
+                </p>
               )}
             </div>
           </div>
         ))}
       </>
+    );
+  }
+}
+
+function UserCard({ avatar, name, reviews, showRatings }) {
+  const [isMobile] = React.useState(window.innerWidth < 631);
+
+  if (isMobile) {
+    return (
+      <div className="flex flex-col items-start mb-6 bg-white rounded-lg shadow">
+        <div className="flex items-center">
+          <img
+            src={avatar}
+            alt="avatar"
+            className="rounded-l-lg w-24 mr-4"
+            referrerPolicy="no-referrer"
+          />
+          <div>
+            <p className="text-xl font-semibold">{name}</p>
+            <p className="text-sm">
+              Total reviews:
+              <span className="font-medium ml-1">{reviews.length}</span>
+            </p>
+            {showRatings && (
+              <>
+                <p className="text-sm">
+                  Average rating:
+                  <span className="font-medium ml-1">
+                    {calculateRating(reviews)}
+                  </span>
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="bg-white rounded-lg flex items-center mb-6 shadow">
+        <img
+          src={avatar}
+          alt="avatar"
+          className="rounded-l-lg w-36"
+          referrerPolicy="no-referrer"
+        />
+        <div className="flex flex-col p-4">
+          <p className="text-xl font-semibold">{name}</p>
+          <p className="text-sm">
+            Total reviews:
+            <span className="font-medium ml-1">{reviews.length}</span>
+          </p>
+          {showRatings && (
+            <>
+              <p className="text-sm">
+                Average rating:
+                <span className="font-medium ml-1">
+                  {calculateRating(reviews)}
+                </span>
+              </p>
+              <p className="text-sm">
+                Highest rated:
+                <span className="font-medium ml-1">
+                  {findHighestRated(reviews)}
+                </span>
+              </p>
+              <p className="text-sm">
+                Lowest rated:
+                <span className="font-medium ml-1">
+                  {findLowestRated(reviews)}
+                </span>
+              </p>
+            </>
+          )}
+        </div>
+      </div>
     );
   }
 }

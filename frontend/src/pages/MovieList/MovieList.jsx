@@ -17,7 +17,7 @@ export default function MoviesList({ movies, error }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {movies.map((movie) => (
             <div
-              className="bg-white rounded-xl shadow flex justify-between hover:scale-[1.02] transition-all cursor-pointer"
+              className="bg-white rounded-xl shadow flex justify-between hover:scale-[1.01] transition-all cursor-pointer"
               key={movie.imdbID}
               onClick={() => navigate(routes.MOVIE(movie.imdbID))}
             >
