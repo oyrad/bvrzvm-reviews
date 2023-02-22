@@ -22,7 +22,7 @@ export default function MovieDetails() {
 
   React.useEffect(() => {
     fetch(
-      `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&i=${id}`
+      `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&i=${id}`
     )
       .then((res) => res.json())
       .then((data) => setMovie(data));
