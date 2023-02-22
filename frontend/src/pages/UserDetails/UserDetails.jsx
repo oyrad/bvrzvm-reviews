@@ -20,7 +20,7 @@ export default function UserDetails() {
   const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
-    fetch(`/api/reviews/user/${id}`)
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/user/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.length === 0) {

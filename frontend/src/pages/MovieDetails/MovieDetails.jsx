@@ -21,15 +21,17 @@ export default function MovieDetails() {
   const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=c370deb2&i=${id}`)
+    fetch(
+      `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&i=${id}`
+    )
       .then((res) => res.json())
       .then((data) => setMovie(data));
 
-    fetch(`/api/reviews/${id}`)
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${id}`)
       .then((res) => res.json())
       .then((data) => setReviews(data));
 
-    fetch(`/api/reviews/${user.id}/${id}`)
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${user.id}/${id}`)
       .then((res) => res.json())
       .then((data) => setReviewByCurrentUser(data[0]));
   }, [user, id]);

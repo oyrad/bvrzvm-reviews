@@ -27,11 +27,11 @@ export default function Header({ setMovies, setError, query, setQuery }) {
   }, []);
 
   function googleAuth() {
-    window.open("http://localhost:4420/auth/google", "_self");
+    window.open(`${process.env.REACT_APP_SERVER_URL}/auth/google`, "_self");
   }
 
   function logout() {
-    window.open("http://localhost:4420/auth/logout", "_self");
+    window.open(`${process.env.REACT_APP_SERVER_URL}/auth/logout`, "_self");
   }
 
   return (

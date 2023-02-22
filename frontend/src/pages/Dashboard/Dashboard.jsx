@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [itemOffset, setItemOffset] = React.useState(0);
 
   React.useEffect(() => {
-    fetch("/api/reviews")
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews`)
       .then((res) => res.json())
       .then((data) => setRecentReviews(data))
       .catch((err) => console.log(err));

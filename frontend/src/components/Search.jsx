@@ -17,7 +17,7 @@ export default function Search({
     setMovies([]);
     setError(undefined);
     const res = await fetch(
-      `http://www.omdbapi.com/?apikey=c370deb2&s=${query}`
+      `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&s=${query}`
     );
     const data = await res.json();
 

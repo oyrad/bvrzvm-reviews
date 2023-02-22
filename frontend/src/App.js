@@ -21,7 +21,7 @@ export default function App() {
 
   React.useEffect(() => {
     async function getUser() {
-      fetch("/auth/login/success", {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login/success`, {
         method: "GET",
         credentials: "include",
         headers: {

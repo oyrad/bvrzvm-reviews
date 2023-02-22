@@ -14,7 +14,7 @@ export default function ReviewCard({
   const navigate = useNavigate();
 
   function handleDelete() {
-    fetch(`/api/reviews/${review._id}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${review._id}`, {
       method: "DELETE",
     });
     refreshReviews();
