@@ -32,7 +32,12 @@ export default function ReviewForm({
             </div>
           </div>
           <div className="flex flex-col mb-4">
-            <label className="text-sm font-semibold mb-1">Review</label>
+            <div className="flex justify-between">
+              <label className="text-sm font-semibold mb-1">Review</label>
+              <p className="text-gray-700 text-sm">
+                {description.length} / 200
+              </p>
+            </div>
             <textarea
               name="review"
               maxLength={200}

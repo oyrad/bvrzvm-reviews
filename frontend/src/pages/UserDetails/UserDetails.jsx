@@ -25,10 +25,11 @@ export default function UserDetails() {
       .then((data) => {
         if (data.length === 0) {
           setHasNoReviews(true);
+        } else {
+          setReviews(data);
+          setUserName(data[0].user);
+          setAvatar(data[0].avatar);
         }
-        setReviews(data);
-        setUserName(data[0].user);
-        setAvatar(data[0].avatar);
         setIsLoading(false);
       })
       .catch((err) => console.log(err));
@@ -113,11 +114,9 @@ export default function UserDetails() {
 }
 
 function UserCard({ avatar, name, reviews, showRatings }) {
-  const [isMobile] = React.useState(window.innerWidth < 631);
-
-  if (isMobile) {
-    return (
-      <div className="flex flex-col items-start mb-6 bg-white rounded-lg shadow">
+  return (
+    <>
+      <div className="md:hidden flex flex-col items-start mb-6 bg-white rounded-lg shadow">
         <div className="flex items-center">
           <img
             src={avatar}
@@ -144,10 +143,7 @@ function UserCard({ avatar, name, reviews, showRatings }) {
           </div>
         </div>
       </div>
-    );
-  } else {
-    return (
-      <div className="bg-white rounded-lg flex items-center mb-6 shadow">
+      <div className="hidden m bg-white rounded-lg md:flex items-center mb-6 shadow">
         <img
           src={avatar}
           alt="avatar"
@@ -184,6 +180,6 @@ function UserCard({ avatar, name, reviews, showRatings }) {
           )}
         </div>
       </div>
-    );
-  }
+    </>
+  );
 }

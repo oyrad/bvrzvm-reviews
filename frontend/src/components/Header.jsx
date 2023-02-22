@@ -63,7 +63,7 @@ export default function Header({ setMovies, setError, query, setQuery }) {
         {user.displayName ? (
           <>
             <div
-              className="flex items-center cursor-pointer hover:opacity-90"
+              className="flex items-center cursor-pointer hover:opacity-80"
               onClick={() => navigate(routes.USER(user.id))}
             >
               <img
@@ -73,12 +73,12 @@ export default function Header({ setMovies, setError, query, setQuery }) {
               />
               <p className="mr-4 lg:mr-8 hidden md:block">{user.displayName}</p>
             </div>
-            <p onClick={logout} className="cursor-pointer">
+            <p onClick={logout} className="cursor-pointer hover:opacity-80">
               Log out
             </p>
           </>
         ) : (
-          <p onClick={googleAuth} className="cursor-pointer">
+          <p onClick={googleAuth} className="cursor-pointer hover:opacity-80">
             Log in
           </p>
         )}
