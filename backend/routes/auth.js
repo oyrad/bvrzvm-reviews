@@ -7,7 +7,10 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000",
+    successRedirect:
+      process.env.NODE_ENV === "production"
+        ? process.env.PRODUCTION_URL
+        : process.env.DEVELOPMENT_URL,
     failureRedirect: "/login/failed",
   })
 );
@@ -34,7 +37,11 @@ router.get("/login/failed", (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("http://localhost:3000");
+  res.redirect(
+    process.env.NODE_ENV === "production"
+      ? process.env.PRODUCTION_URL
+      : process.env.DEVELOPMENT_URL
+  );
 });
 
 module.exports = router;

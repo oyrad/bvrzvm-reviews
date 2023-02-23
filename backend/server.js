@@ -27,7 +27,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://bvrzvm-reviews.onrender.com"],
+    origin: [process.env.DEVELOPMENT_URL, process.env.PRODUCTION_URL],
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
   })
