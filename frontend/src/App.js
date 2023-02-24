@@ -28,7 +28,7 @@ export default function App() {
           Accept: "application/json",
           "Content-type": "application/json",
           "Access-Control-Allow-Credentials": true,
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": process.env.REACT_APP_SERVER_URL,
         },
       })
         .then((res) => {
