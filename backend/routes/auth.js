@@ -2,10 +2,13 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
 
 router.get(
-  "/google/callback",
+  "/auth/google/callback",
   passport.authenticate("google", {
     successRedirect:
       process.env.NODE_ENV === "production"
@@ -15,7 +18,7 @@ router.get(
   })
 );
 
-router.get("/login/success", (req, res) => {
+router.get("/auth/login/success", (req, res) => {
   if (req.user) {
     res.status(200).json({
       error: false,
@@ -28,14 +31,14 @@ router.get("/login/success", (req, res) => {
   }
 });
 
-router.get("/login/failed", (req, res) => {
+router.get("/auth/login/failed", (req, res) => {
   res.status(401).json({
     error: true,
     message: "Failed to log in.",
   });
 });
 
-router.get("/logout", (req, res) => {
+router.get("/auth/logout", (req, res) => {
   req.logout();
   res.redirect(
     process.env.NODE_ENV === "production"

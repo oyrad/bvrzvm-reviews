@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/reviews", require("./routes/reviewRoutes"));
-app.use("/auth", require("./routes/auth"));
+app.use("/", require("./routes/auth"));
 
 app.use(errorHandler);
 
