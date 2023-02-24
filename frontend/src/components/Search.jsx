@@ -13,19 +13,9 @@ export default function Search({
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault();
     setMovies([]);
     setError(undefined);
-    const res = await fetch(
-      `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&s=${query}`
-    );
-    const data = await res.json();
-
-    if (data.Response === "True") {
-      setMovies(data.Search);
-    } else {
-      setError(data.Error);
-    }
+    e.preventDefault();
     navigate(routes.SEARCH(query));
   }
 

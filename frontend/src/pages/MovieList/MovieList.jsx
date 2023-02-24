@@ -1,11 +1,29 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { routes } from "../../api/paths";
 
-export default function MoviesList({ movies, error }) {
+export default function MoviesList({ movies, error, setMovies, setError }) {
   const navigate = useNavigate();
+
+  const { query } = useParams();
+
+  console.log(query);
+
+  React.useEffect(() => {
+    fetch(
+      `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_API_KEY}&s=${query}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.Response === "True") {
+          setMovies(data.Search);
+        } else {
+          setError(data.Error);
+        }
+      });
+  }, [query, setMovies, setError]);
 
   return (
     <>

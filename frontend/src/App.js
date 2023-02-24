@@ -66,7 +66,14 @@ export default function App() {
             <Route path={routes.DASHBOARD} element={<Dashboard />} />
             <Route
               path="/search/:query"
-              element={<MovieList movies={movies} error={error} />}
+              element={
+                <MovieList
+                  movies={movies}
+                  error={error}
+                  setMovies={setMovies}
+                  setError={setError}
+                />
+              }
             />
             <Route path="/movie/:id" element={<MovieDetails />} />
             <Route path="/user/:id" element={<UserDetails />} />
