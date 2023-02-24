@@ -27,7 +27,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: [process.env.DEVELOPMENT_URL, process.env.PRODUCTION_URL],
+    origin: "*",
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type, Authorization, X-Requested-With",
     credentials: true,
