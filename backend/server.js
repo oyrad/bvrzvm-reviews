@@ -33,6 +33,10 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.sendStatus(200);
+});
+
 app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/auth", require("./routes/auth"));
 
