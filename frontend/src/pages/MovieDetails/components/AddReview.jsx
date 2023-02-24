@@ -23,7 +23,7 @@ export default function AddReview({ movie, setReviews, setCurrentReview }) {
       rating: Math.round(rating * 10) / 10,
       description: description,
     };
-    fetch("/api/reviews", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews`, {
       method: "POST",
       body: JSON.stringify(newReview),
       headers: {

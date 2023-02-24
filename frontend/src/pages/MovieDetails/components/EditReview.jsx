@@ -21,13 +21,16 @@ export default function EditReview({
       rating: Math.round(rating * 10) / 10,
       description: description,
     };
-    fetch(`/api/reviews/${currentReview._id}`, {
-      method: "PUT",
-      body: JSON.stringify(updatedReview),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/reviews/${currentReview._id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(updatedReview),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     setIsEditModeOn(false);
     setCurrentReview({
       ...updatedReview,
