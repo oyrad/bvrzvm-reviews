@@ -27,7 +27,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: [process.env.DEVELOPMENT_URL, process.env.PRODUCTION_URL],
+    origin: [process.env.CLIENT_URL],
     methods: "GET, POST, PUT, DELETE",
     credentials: true,
   })
@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/reviews", require("./routes/reviewRoutes"));
-app.use("/", require("./routes/auth"));
+app.use("/auth", require("./routes/auth"));
 
 app.use(errorHandler);
 
