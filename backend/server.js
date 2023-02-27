@@ -25,13 +25,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  cors({
-    origin: [process.env.CLIENT_URL],
-    methods: "GET, POST, PUT, DELETE",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.sendStatus(200);
