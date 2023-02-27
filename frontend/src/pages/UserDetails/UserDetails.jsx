@@ -6,6 +6,7 @@ import { calculateRating } from "../../util/ratingsUtil";
 import { findHighestRated, findLowestRated } from "../../util/findByRating";
 import { UserContext } from "../../UserContext";
 import { getColorFromRating } from "../../util/ratingsUtil";
+import { Spinner } from "../../components/Spinner";
 
 export default function UserDetails() {
   const { id } = useParams();
@@ -30,87 +31,89 @@ export default function UserDetails() {
           setUserName(data[0].user);
           setAvatar(data[0].avatar);
         }
-        setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }, [id]);
 
-  if (isLoading) {
-    return <></>;
-  } else if (hasNoReviews) {
-    return (
-      <UserCard
-        avatar={user.photos[0].value}
-        name={user.displayName}
-        reviews={reviews}
-        showRatings={false}
-      />
-    );
-  } else {
-    return (
-      <>
+  return (
+    <>
+      {isLoading ? (
+        <Spinner isLoading={isLoading} />
+      ) : hasNoReviews ? (
         <UserCard
-          avatar={avatar}
-          name={userName}
+          avatar={user.photos[0].value}
+          name={user.displayName}
           reviews={reviews}
-          showRatings
+          showRatings={false}
         />
-        <p className="text-2xl font-semibold mb-4">Reviews</p>
-        {reviews.map((review) => (
-          <div
-            className="bg-white rounded md:rounded-lg flex items-center mb-4 cursor-pointer shadow border-l-4 md:border-none"
-            onClick={() => navigate(routes.MOVIE(review.movieId))}
-            style={{ borderColor: getColorFromRating(review.rating) }}
-            key={review._id}
-          >
+      ) : (
+        <>
+          <UserCard
+            avatar={avatar}
+            name={userName}
+            reviews={reviews}
+            showRatings
+          />
+          <p className="text-2xl font-semibold mb-4">Reviews</p>
+          {reviews.map((review) => (
             <div
-              className="hidden md:block min-w-[8rem] max-w-[8rem] relative center text-white bg-black hover:bg-gray-700 transition rounded-l-lg border-r-4"
+              className="bg-white rounded md:rounded-lg flex items-center mb-4 cursor-pointer shadow border-l-4 md:border-none"
+              onClick={() => navigate(routes.MOVIE(review.movieId))}
               style={{ borderColor: getColorFromRating(review.rating) }}
+              key={review._id}
             >
-              <img
-                src={review.moviePoster}
-                alt="poster"
-                className="rounded-l-lg opacity-60"
-              />
-              <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
-                {review.rating}
-              </p>
-            </div>
-            <div className="p-4">
-              <div className="flex items-center">
-                <p className="ml-1 mr-4 text-4xl md:hidden">{review.rating}</p>
-                <div>
-                  <p className="text-xl">
-                    <span className="font-semibold">{review.movieName}</span> (
-                    {review.movieYear})
-                  </p>
-                  <p className="text-xs text-gray-500 italic">
-                    {review.createdAt === review.updatedAt ? (
-                      new Date(review.createdAt)
-                        .toLocaleString("hr-HR")
-                        .substring(0, 19)
-                    ) : (
-                      <span>
-                        Edited:{" "}
-                        {new Date(review.updatedAt)
-                          .toLocaleString("hr-HR")
-                          .substring(0, 19)}
-                      </span>
-                    )}
-                  </p>
-                </div>
-              </div>
-              {review.description && (
-                <p className="mt-2 text-sm xl:pr-4  break-all">
-                  {review.description}
+              <div
+                className="hidden md:block min-w-[8rem] max-w-[8rem] relative center text-white bg-black hover:bg-gray-700 transition rounded-l-lg border-r-4"
+                style={{ borderColor: getColorFromRating(review.rating) }}
+              >
+                <img
+                  src={review.moviePoster}
+                  alt="poster"
+                  className="rounded-l-lg opacity-60"
+                />
+                <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
+                  {review.rating}
                 </p>
-              )}
+              </div>
+              <div className="p-4">
+                <div className="flex items-center">
+                  <p className="ml-1 mr-4 text-4xl md:hidden">
+                    {review.rating}
+                  </p>
+                  <div>
+                    <p className="text-xl">
+                      <span className="font-semibold">{review.movieName}</span>{" "}
+                      ({review.movieYear})
+                    </p>
+                    <p className="text-xs text-gray-500 italic">
+                      {review.createdAt === review.updatedAt ? (
+                        new Date(review.createdAt)
+                          .toLocaleString("hr-HR")
+                          .substring(0, 19)
+                      ) : (
+                        <span>
+                          Edited:{" "}
+                          {new Date(review.updatedAt)
+                            .toLocaleString("hr-HR")
+                            .substring(0, 19)}
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+                {review.description && (
+                  <p className="mt-2 text-sm xl:pr-4  break-all">
+                    {review.description}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </>
-    );
-  }
+          ))}
+        </>
+      )}
+    </>
+  );
 }
 
 function UserCard({ avatar, name, reviews, showRatings }) {

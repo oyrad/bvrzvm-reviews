@@ -10,12 +10,14 @@ import ReviewCard from "../../components/ReviewCard";
 
 import burzum from "../../images/burzum-logo.jpg";
 import imdb from "../../images/imdb-logo.webp";
+import { Spinner } from "../../components/Spinner";
 
 export default function MovieDetails() {
   const [movie, setMovie] = React.useState();
   const [reviews, setReviews] = React.useState([]);
   const [reviewByCurrentUser, setReviewByCurrentUser] = React.useState();
   const [isEditModeOn, setIsEditModeOn] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const { id } = useParams();
   const { user } = React.useContext(UserContext);
@@ -33,7 +35,8 @@ export default function MovieDetails() {
 
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${user.id}/${id}`)
       .then((res) => res.json())
-      .then((data) => setReviewByCurrentUser(data[0]));
+      .then((data) => setReviewByCurrentUser(data[0]))
+      .finally(() => setIsLoading(false));
   }, [user, id]);
 
   function refreshReviewsOnDelete() {
@@ -43,95 +46,107 @@ export default function MovieDetails() {
     );
   }
 
-  if (movie)
-    return (
-      <>
-        <div className="flex flex-col sm:flex-row bg-white rounded-lg shadow mb-8">
-          <img
-            src={movie.Poster}
-            alt="poster"
-            className="rounded-t-lg md:rounded-none md:rounded-l-lg mr-0 md:mr-1"
-          />
-          <div className="p-4 flex flex-col justify-between">
-            <div>
-              <p className="text-xl md:text-2xl">
-                <span className="font-semibold">{movie.Title}</span> (
-                {movie.Year})
-              </p>
-              <p className="text-sm">{movie.Genre}</p>
-              <p className="text-sm mb-4">{movie.Runtime}</p>
-              <p className="text-sm">
-                <span className="font-semibold mr-1">Actors:</span>
-                {movie.Actors}
-              </p>
-              <p className="text-sm">
-                <span className="font-semibold mr-1">Director:</span>
-                {movie.Director}
-              </p>
-              <p className="mb-4 text-sm">
-                <span className="font-semibold mr-1">
-                  {movie.Writer.includes(",") ? "Writers:" : "Writer:"}
-                </span>
-                {movie.Writer}
-              </p>
-              <p className="mb-4 w-[90%] lg:w-[85%] xl:w-[80%]">{movie.Plot}</p>
-            </div>
-            <div className="pb-1">
-              <p className="font-semibold">Ratings:</p>
-              <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-8">
-                <div className="flex items-center mt-2 md:mt-0">
-                  <img src={burzum} alt="burzum" className="w-36" />
-                  <p className="ml-2 md:ml-4">{calculateRating(reviews)}</p>
+  return (
+    <>
+      {isLoading ? (
+        <Spinner isLoading={isLoading} />
+      ) : (
+        movie && (
+          <>
+            <div className="flex flex-col sm:flex-row bg-white rounded-lg shadow mb-8">
+              <img
+                src={movie.Poster}
+                alt="poster"
+                className="rounded-t-lg md:rounded-none md:rounded-l-lg mr-0 md:mr-1"
+              />
+              <div className="p-4 flex flex-col justify-between">
+                <div>
+                  <p className="text-xl md:text-2xl">
+                    <span className="font-semibold">{movie.Title}</span> (
+                    {movie.Year})
+                  </p>
+                  <p className="text-sm">{movie.Genre}</p>
+                  <p className="text-sm mb-4">{movie.Runtime}</p>
+                  <p className="text-sm">
+                    <span className="font-semibold mr-1">Actors:</span>
+                    {movie.Actors}
+                  </p>
+                  <p className="text-sm">
+                    <span className="font-semibold mr-1">Director:</span>
+                    {movie.Director}
+                  </p>
+                  <p className="mb-4 text-sm">
+                    <span className="font-semibold mr-1">
+                      {movie.Writer.includes(",") ? "Writers:" : "Writer:"}
+                    </span>
+                    {movie.Writer}
+                  </p>
+                  <p className="mb-4 w-[90%] lg:w-[85%] xl:w-[80%]">
+                    {movie.Plot}
+                  </p>
                 </div>
-                <a
-                  href={`https://www.imdb.com/title/${movie.imdbID}/`}
-                  className="flex mb-3 items-center"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img src={imdb} alt="logo" className="w-20 mr-2 md:mr-4" />
-                  <p>{movie.Ratings[0].Value}</p>
-                </a>
+                <div className="pb-1">
+                  <p className="font-semibold">Ratings:</p>
+                  <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <div className="flex items-center mt-2 md:mt-0">
+                      <img src={burzum} alt="burzum" className="w-36" />
+                      <p className="ml-2 md:ml-4">{calculateRating(reviews)}</p>
+                    </div>
+                    <a
+                      href={`https://www.imdb.com/title/${movie.imdbID}/`}
+                      className="flex mb-3 items-center"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img
+                        src={imdb}
+                        alt="logo"
+                        className="w-20 mr-2 md:mr-4"
+                      />
+                      <p>{movie.Ratings[0].Value}</p>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        {user.name ? (
-          reviewByCurrentUser ? (
-            <div className="mb-8">
-              {isEditModeOn ? (
-                <>
-                  <EditReview
-                    currentReview={reviewByCurrentUser}
-                    setCurrentReview={setReviewByCurrentUser}
-                    reviews={reviews}
-                    setReviews={setReviews}
-                    setIsEditModeOn={setIsEditModeOn}
-                  />
-                </>
+            {user.name ? (
+              reviewByCurrentUser ? (
+                <div className="mb-8">
+                  {isEditModeOn ? (
+                    <>
+                      <EditReview
+                        currentReview={reviewByCurrentUser}
+                        setCurrentReview={setReviewByCurrentUser}
+                        reviews={reviews}
+                        setReviews={setReviews}
+                        setIsEditModeOn={setIsEditModeOn}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <ReviewCard
+                        review={reviewByCurrentUser}
+                        isEditable
+                        refreshReviews={refreshReviewsOnDelete}
+                        setIsEditModeOn={setIsEditModeOn}
+                      />
+                    </>
+                  )}
+                </div>
               ) : (
-                <>
-                  <ReviewCard
-                    review={reviewByCurrentUser}
-                    isEditable
-                    refreshReviews={refreshReviewsOnDelete}
-                    setIsEditModeOn={setIsEditModeOn}
-                  />
-                </>
-              )}
-            </div>
-          ) : (
-            <AddReview
-              movie={movie}
-              setReviews={setReviews}
-              setCurrentReview={setReviewByCurrentUser}
-            />
-          )
-        ) : (
-          <p className="text-xl mb-8">Log in to write a review.</p>
-        )}
-
-        <ReviewList reviews={reviews} />
-      </>
-    );
+                <AddReview
+                  movie={movie}
+                  setReviews={setReviews}
+                  setCurrentReview={setReviewByCurrentUser}
+                />
+              )
+            ) : (
+              <p className="text-xl mb-8">Log in to write a review.</p>
+            )}
+            <ReviewList reviews={reviews} />
+          </>
+        )
+      )}
+    </>
+  );
 }

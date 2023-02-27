@@ -3,13 +3,12 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { routes } from "../../api/paths";
+import { Spinner } from "../../components/Spinner";
 
 export default function MoviesList({ movies, error, setMovies, setError }) {
   const navigate = useNavigate();
-
   const { query } = useParams();
-
-  console.log(query);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     fetch(
@@ -22,12 +21,16 @@ export default function MoviesList({ movies, error, setMovies, setError }) {
         } else {
           setError(data.Error);
         }
-      });
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }, [query, setMovies, setError]);
 
   return (
     <>
-      {error ? (
+      {isLoading ? (
+        <Spinner isLoading={isLoading} />
+      ) : error ? (
         <div className="bg-red-100 w-full p-3 rounded-lg -mt-2">
           <p className="text-red-600">Error: {error}</p>
         </div>
