@@ -6,7 +6,10 @@ module.exports = function (passport) {
       {
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: "/auth/google/callback",
+        callbackURL:
+          process.env.NODE_ENV === "production"
+            ? "https://bvrzvm-reviews-api.cyclic.app/auth/google/callback"
+            : "/auth/google/callback",
         scope: ["profile"],
       },
       async function (accessToken, refreshToken, profile, done) {
