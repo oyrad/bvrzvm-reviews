@@ -30,8 +30,7 @@ app.use(
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    "X-Forwarded-Proto":
-      process.env.NODE_ENV === "development" ? "http" : "https",
+    "X-Forwarded-Proto": "https",
   })
 );
 
