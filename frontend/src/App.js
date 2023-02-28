@@ -20,29 +20,25 @@ export default function App() {
   const [user, setUser] = React.useState({});
 
   React.useEffect(() => {
-    async function getUser() {
-      fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login/success`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
+    fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login/success`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+        throw new Error("authentication failed");
       })
-        .then((res) => {
-          if (res.status === 200) {
-            return res.json();
-          }
-          throw new Error("authentication failed");
-        })
-        .then((data) => {
-          setUser(data.user);
-        })
-        .catch((err) => console.log(err));
-    }
-
-    getUser();
+      .then((data) => {
+        setUser(data.user);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
