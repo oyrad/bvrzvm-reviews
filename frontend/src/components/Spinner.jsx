@@ -12,7 +12,7 @@ export function Spinner({ isLoading }) {
   return (
     <>
       {hasTimePassed && (
-        <div className="flex justify-center items-center h-[80vh]">
+        <div className="flex justify-center items-center h-[70vh] sm:h-[80vh]">
           <ClipLoader loading={isLoading} size={100} />
         </div>
       )}
