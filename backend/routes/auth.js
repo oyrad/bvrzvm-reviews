@@ -13,7 +13,6 @@ router.get(
 );
 
 router.get("/login/success", (req, res) => {
-  console.log(req);
   if (req.user) {
     res.status(200).json({
       error: false,
