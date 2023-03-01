@@ -11,6 +11,7 @@ module.exports = function (passport) {
             ? "https://bvrzvm-reviews-api.cyclic.app/auth/google/callback"
             : "/auth/google/callback",
         scope: ["profile"],
+        passReqToCallback: true,
       },
       async function (accessToken, refreshToken, profile, done) {
         done(null, profile);
