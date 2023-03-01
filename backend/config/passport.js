@@ -13,7 +13,7 @@ module.exports = function (passport) {
         scope: ["profile"],
         passReqToCallback: true,
       },
-      async function (accessToken, refreshToken, profile, done) {
+      async function (request, accessToken, refreshToken, profile, done) {
         done(null, profile);
       }
     )
