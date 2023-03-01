@@ -12,8 +12,8 @@ module.exports = function (passport) {
             : "/auth/google/callback",
         scope: ["profile"],
       },
-      async function (accessToken, refreshToken, profile, done) {
-        done(null, profile);
+      async function (accessToken, refreshToken, profile, callback) {
+        callback(null, profile);
       }
     )
   );
