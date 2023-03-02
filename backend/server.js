@@ -22,7 +22,14 @@ app.use(
   })
 );
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(
+  passport.session({
+    cookie: {
+      sameSite: "none",
+      secure: true,
+    },
+  })
+);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(
