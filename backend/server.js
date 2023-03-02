@@ -1,8 +1,10 @@
 const express = require("express");
+const expressSession = require("express-session");
 const dotenv = require("dotenv").config();
 const { errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("passport");
 
@@ -13,23 +15,32 @@ require("./config/passport")(passport);
 connectDB();
 const app = express();
 
+app.set("trust proxy");
+
 app.use(express.json());
+app.use(cookieParser());
 app.use(
+  expressSession({
+    resave: true,
+    saveUninitialized: true,
+    secret: "darx",
+    cookie: {
+      sameSite: "none",
+      secure: true,
+      maxAge: 24 * 60 * 60 * 100,
+    },
+  })
+);
+
+/* app.use(
   cookieSession({
     name: "session",
     keys: ["darx"],
     maxAge: 24 * 60 * 60 * 100,
   })
-);
+); */
 app.use(passport.initialize());
-app.use(
-  passport.session({
-    cookie: {
-      sameSite: "none",
-      secure: true,
-    },
-  })
-);
+app.use(passport.session());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(
@@ -39,8 +50,6 @@ app.use(
     credentials: true,
   })
 );
-
-app.enable("trust proxy");
 
 app.get("/", (req, res) => {
   res.sendStatus(200);
