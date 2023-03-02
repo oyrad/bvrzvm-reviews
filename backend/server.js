@@ -30,9 +30,10 @@ app.use(
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    "X-Forwarded-Proto": "https",
   })
 );
+
+app.enable("trust proxy");
 
 app.get("/", (req, res) => {
   res.sendStatus(200);
