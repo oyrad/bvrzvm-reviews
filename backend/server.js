@@ -37,7 +37,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
 if (process.env.NODE_ENV === "production") {
-  const root = path.join(__dirname, "client", "build");
+  const root = path.join(__dirname, "frontend", "build");
   app.use(express.static(root));
   app.get("*", (req, res) => {
     res.sendFile("index.html", { root });
