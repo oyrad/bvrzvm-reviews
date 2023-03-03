@@ -11,9 +11,10 @@ module.exports = function (passport) {
             ? "https://bvrzvm-reviews-api.cyclic.app/auth/google/callback"
             : "/auth/google/callback",
         scope: ["profile"],
+        proxy: true,
       },
-      async function (accessToken, refreshToken, profile, callback) {
-        callback(null, profile);
+      async function (accessToken, refreshToken, profile, done) {
+        done(null, profile);
       }
     )
   );
