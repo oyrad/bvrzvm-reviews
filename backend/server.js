@@ -1,16 +1,13 @@
 const express = require("express");
-const expressSession = require("express-session");
 const dotenv = require("dotenv").config();
 const { errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const cookieSession = require("cookie-session");
-const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("passport");
+require("./config/passport")(passport);
 
 const port = process.env.PORT || 4420;
-
-require("./config/passport")(passport);
 
 connectDB();
 const app = express();
@@ -30,7 +27,7 @@ app.use(
 app.use(
   cookieSession({
     name: "session",
-    keys: ["darx"],
+    keys: ["key"],
     maxAge: 24 * 60 * 60 * 100,
     secure: process.env.NODE_ENV === "production" ? true : false,
     sameSite: process.env.NODE_ENV === "production" ? "none" : false,

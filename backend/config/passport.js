@@ -14,7 +14,7 @@ module.exports = function (passport) {
         proxy: true,
       },
       async function (accessToken, refreshToken, profile, done) {
-        done(null, profile);
+        return done(null, profile);
       }
     )
   );
