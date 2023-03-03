@@ -18,27 +18,18 @@ const app = express();
 app.set("trust proxy");
 
 app.use(express.json());
-app.use(cookieParser());
-app.use(
-  expressSession({
-    resave: true,
-    saveUninitialized: true,
-    secret: "darx",
-    cookie: {
-      sameSite: "none",
-      secure: true,
-      maxAge: 24 * 60 * 60 * 100,
-    },
-  })
-);
 
-/* app.use(
+//app.use(cookieParser());
+app.use(
   cookieSession({
     name: "session",
     keys: ["darx"],
     maxAge: 24 * 60 * 60 * 100,
+    secure: process.env.NODE_ENV === "production" ? true : false,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : false,
   })
-); */
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
