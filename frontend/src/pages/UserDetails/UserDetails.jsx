@@ -58,7 +58,9 @@ export default function UserDetails() {
           <p className="text-2xl font-semibold mb-4">Reviews</p>
           {reviews.map((review) => (
             <div
-              className="bg-white rounded md:rounded-lg flex items-center mb-4 cursor-pointer shadow border-l-4 md:border-none"
+              className={`bg-white rounded md:rounded-lg flex items-center mb-4 cursor-pointer shadow border-l-4 md:border-none ${
+                review.rating === 10 && "gradient-border border-none"
+              }`}
               onClick={() => navigate(routes.MOVIE(review.movieId))}
               style={{ borderColor: getColorFromRating(review.rating) }}
               key={review._id}

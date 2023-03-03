@@ -24,7 +24,7 @@ export default function ReviewCard({
     <>
       {isEditable && (
         <div className="flex justify-between items-start">
-          <p className="text-2xl font-semibold mb-2">Your review</p>
+          <p className="text-2xl font-semibold mb-3">Your review</p>
           <div className="flex space-x-1">
             <button
               className="btn btn-inverse"
@@ -39,7 +39,9 @@ export default function ReviewCard({
         </div>
       )}
       <div
-        className="rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none"
+        className={`rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none ${
+          review.rating === 10 && "gradient-border border-none"
+        }`}
         style={{ borderColor: getColorFromRating(review.rating) }}
         onClick={() => navigate(routes.USER(review.userId))}
       >

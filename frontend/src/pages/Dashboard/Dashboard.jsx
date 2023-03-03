@@ -91,7 +91,9 @@ function Reviews({ recentReviews }) {
   return recentReviews.map((review) => (
     <div
       key={review._id}
-      className="rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none"
+      className={`rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none ${
+        review.rating === 10 && "gradient-border border-none"
+      }`}
       style={{ borderColor: getColorFromRating(review.rating) }}
     >
       <div className="flex">

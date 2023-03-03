@@ -21,6 +21,7 @@ export default function ReviewForm({
                   step="any"
                   min="0"
                   max="10"
+                  size="3"
                   name="rating"
                   className="w-12 form-input mr-2"
                   value={rating}
