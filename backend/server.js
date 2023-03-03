@@ -17,7 +17,7 @@ const app = express();
 
 app.set("trust proxy");
 
-app.use(express.json());
+app.enable(express.json());
 
 //app.use(cookieParser());
 app.use(
