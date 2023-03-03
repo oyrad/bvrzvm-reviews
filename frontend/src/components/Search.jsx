@@ -11,12 +11,16 @@ export default function Search({
   className,
 }) {
   const navigate = useNavigate();
+  const [previousQuery, setPreviousQuery] = React.useState("");
 
   async function handleSubmit(e) {
-    setMovies([]);
-    setError(undefined);
     e.preventDefault();
-    navigate(routes.SEARCH(query));
+    if (query !== previousQuery) {
+      setMovies([]);
+      setError(undefined);
+      setPreviousQuery(query);
+      navigate(routes.SEARCH(query));
+    }
   }
 
   return (
