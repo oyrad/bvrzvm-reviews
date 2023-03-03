@@ -15,11 +15,18 @@ require("./config/passport")(passport);
 connectDB();
 const app = express();
 
-app.set("trust proxy");
+app.set("trust proxy", 1);
 
-app.enable(express.json());
+app.use(express.json());
 
 //app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(
   cookieSession({
     name: "session",
@@ -32,15 +39,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
 
 app.get("/", (req, res) => {
   res.sendStatus(200);
