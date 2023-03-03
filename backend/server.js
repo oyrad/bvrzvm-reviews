@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
 const passport = require("passport");
+const path = require("path");
 require("./config/passport")(passport);
 
 const port = process.env.PORT || 4420;
@@ -15,8 +16,6 @@ const app = express();
 app.set("trust proxy", 1);
 
 app.use(express.json());
-
-//app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -33,7 +32,6 @@ app.use(
     sameSite: process.env.NODE_ENV === "production" ? "none" : false,
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
