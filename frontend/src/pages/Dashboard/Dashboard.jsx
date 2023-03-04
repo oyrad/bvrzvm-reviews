@@ -92,13 +92,15 @@ function Reviews({ recentReviews }) {
     <div
       key={review._id}
       className={`rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none ${
-        review.rating === 10 && "gradient-border border-none"
+        review.rating === 10 && "gradient-border border-none bg-transparent"
       }`}
       style={{ borderColor: getColorFromRating(review.rating) }}
     >
       <div className="flex">
         <div
-          className="hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition"
+          className={`hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition ${
+            review.rating === 10 && "border-none"
+          }`}
           onClick={() => navigate(routes.USER(review.userId))}
           style={{ borderColor: getColorFromRating(review.rating) }}
         >
@@ -123,7 +125,11 @@ function Reviews({ recentReviews }) {
                 <span className="font-semibold">{review.movieName}</span> (
                 {review.movieYear})
               </p>
-              <p className="text-xs text-gray-500 italic">
+              <p
+                className={`text-xs italic ${
+                  review.rating === 10 ? "text-white" : "text-gray-500"
+                }`}
+              >
                 {review.user} -&nbsp;
                 {review.createdAt === review.updatedAt ? (
                   new Date(review.createdAt)

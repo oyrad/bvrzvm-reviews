@@ -40,7 +40,7 @@ export default function ReviewCard({
       )}
       <div
         className={`rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none ${
-          review.rating === 10 && "gradient-border border-none"
+          review.rating === 10 && "gradient-border border-none bg-transparent"
         }`}
         style={{ borderColor: getColorFromRating(review.rating) }}
         onClick={() => navigate(routes.USER(review.userId))}
@@ -48,7 +48,9 @@ export default function ReviewCard({
         <div className="flex justify-between items-center">
           <div className="flex">
             <div
-              className="hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition"
+              className={`hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition ${
+                review.rating === 10 && "border-none"
+              }`}
               style={{ borderColor: getColorFromRating(review.rating) }}
             >
               <img
@@ -66,7 +68,11 @@ export default function ReviewCard({
                 <p className="text-4xl mr-4 ml-1 md:hidden">{review.rating}</p>
                 <div>
                   <p className="font-semibold text-lg mr-2">{review.user}</p>
-                  <p className="text-xs text-gray-500 italic">
+                  <p
+                    className={`text-xs italic ${
+                      review.rating === 10 ? "text-white" : "text-gray-500"
+                    }`}
+                  >
                     {review.createdAt === review.updatedAt ? (
                       new Date(review.createdAt)
                         .toLocaleString("hr-HR")
