@@ -35,22 +35,21 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
-
-if (process.env.NODE_ENV === "production") {
-  const root = path.join(__dirname, "..", "frontend", "build");
-  app.use(express.static(root));
-  app.get("*", (req, res) => {
-    res.sendFile("index.html", { root });
-  });
-}
-
-app.get("/", (req, res) => {
-  res.sendStatus(200);
-});
+app.use(errorHandler);
 
 app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/auth", require("./routes/auth"));
 
-app.use(errorHandler);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "..", "frontend/build")));
+}
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+});
+
+app.get("/", (req, res) => {
+  res.sendStatus(200);
+});
 
 app.listen(port, () => console.log(`Server running on port ${port}.`));
