@@ -43,7 +43,7 @@ export default function AddReview({ movie, setReviews, setCurrentReview }) {
   return (
     <ReviewForm
       title="Add review"
-      buttonText="Save changes"
+      buttonText="Submit review"
       handleSubmit={handleSubmit}
       rating={rating}
       setRating={setRating}

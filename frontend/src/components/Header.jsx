@@ -73,14 +73,20 @@ export default function Header({ setMovies, setError, query, setQuery }) {
               />
               <p className="mr-4 lg:mr-8 hidden md:block">{user.displayName}</p>
             </div>
-            <p onClick={logout} className="cursor-pointer hover:opacity-80">
+            <button
+              onClick={logout}
+              className="cursor-pointer hover:opacity-80"
+            >
               Log out
-            </p>
+            </button>
           </>
         ) : (
-          <p onClick={googleAuth} className="cursor-pointer hover:opacity-80">
+          <button
+            onClick={googleAuth}
+            className="cursor-pointer hover:opacity-80"
+          >
             Log in
-          </p>
+          </button>
         )}
       </div>
     </header>
