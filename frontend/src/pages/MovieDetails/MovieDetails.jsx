@@ -129,6 +129,7 @@ export default function MovieDetails() {
                         isEditable
                         refreshReviews={refreshReviewsOnDelete}
                         setIsEditModeOn={setIsEditModeOn}
+                        page="movie"
                       />
                     </>
                   )}

@@ -59,14 +59,17 @@ export default function UserDetails() {
           {reviews.map((review) => (
             <div
               className={`bg-white rounded md:rounded-lg flex items-center mb-4 cursor-pointer shadow border-l-4 md:border-none ${
-                review.rating === 10 && "gradient-border border-none"
+                review.rating === 10 &&
+                "gradient-border border-none bg-transparent pl-1 md:pl-0"
               }`}
               onClick={() => navigate(routes.MOVIE(review.movieId))}
               style={{ borderColor: getColorFromRating(review.rating) }}
               key={review._id}
             >
               <div
-                className="hidden md:block min-w-[8rem] max-w-[8rem] relative center text-white bg-black hover:bg-gray-700 transition rounded-l-lg border-r-4"
+                className={`hidden md:block min-w-[8rem] max-w-[8rem] relative center text-white bg-black hover:bg-gray-700 transition rounded-l-lg border-r-4 ${
+                  review.rating === 10 && "border-none"
+                }`}
                 style={{ borderColor: getColorFromRating(review.rating) }}
               >
                 <img
@@ -78,7 +81,7 @@ export default function UserDetails() {
                   {review.rating}
                 </p>
               </div>
-              <div className="p-4">
+              <div className={`p-4 ${review.rating === 10 && "pl-5"}`}>
                 <div className="flex items-center">
                   <p className="ml-1 mr-4 text-4xl md:hidden">
                     {review.rating}
@@ -88,7 +91,11 @@ export default function UserDetails() {
                       <span className="font-semibold">{review.movieName}</span>{" "}
                       ({review.movieYear})
                     </p>
-                    <p className="text-xs text-gray-500 italic">
+                    <p
+                      className={`text-xs italic ${
+                        review.rating === 10 ? "text-white" : "text-gray-500"
+                      }`}
+                    >
                       {review.createdAt === review.updatedAt ? (
                         new Date(review.createdAt)
                           .toLocaleString("hr-HR")

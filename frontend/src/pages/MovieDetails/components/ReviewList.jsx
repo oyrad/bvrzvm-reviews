@@ -13,7 +13,12 @@ export default function ReviewList({ reviews }) {
         </p>
       )}
       {reviews.map((review) => (
-        <ReviewCard review={review} key={review._id} isEditable={false} />
+        <ReviewCard
+          review={review}
+          key={review._id}
+          isEditable={false}
+          page="movie"
+        />
       ))}
     </div>
   );

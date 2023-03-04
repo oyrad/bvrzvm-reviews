@@ -6,6 +6,7 @@ import { routes } from "../../api/paths";
 import ReactPaginate from "react-paginate";
 import { getColorFromRating } from "../../util/ratingsUtil";
 import { Spinner } from "../../components/Spinner";
+import ReviewCard from "../../components/ReviewCard";
 
 export default function Dashboard() {
   const [recentReviews, setRecentReviews] = React.useState([]);
@@ -87,77 +88,7 @@ export default function Dashboard() {
 }
 
 function Reviews({ recentReviews }) {
-  const navigate = useNavigate();
   return recentReviews.map((review) => (
-    <div
-      key={review._id}
-      className={`rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none ${
-        review.rating === 10 && "gradient-border border-none bg-transparent"
-      }`}
-      style={{ borderColor: getColorFromRating(review.rating) }}
-    >
-      <div className="flex">
-        <div
-          className={`hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition ${
-            review.rating === 10 && "border-none"
-          }`}
-          onClick={() => navigate(routes.USER(review.userId))}
-          style={{ borderColor: getColorFromRating(review.rating) }}
-        >
-          <img
-            src={review.avatar}
-            alt="avatar"
-            className="md:w-36 lg:w-32 max-w-[10rem] rounded-l-lg opacity-70"
-            referrerPolicy="no-referrer"
-          />
-          <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
-            {review.rating}
-          </p>
-        </div>
-        <div
-          className="flex flex-col justify-center p-4"
-          onClick={() => navigate(routes.MOVIE(review.movieId))}
-        >
-          <div className="flex md:flex-col md:items-start items-center">
-            <p className="ml-1 mr-4 text-4xl md:hidden">{review.rating}</p>
-            <div>
-              <p className="text-lg md:text-xl">
-                <span className="font-semibold">{review.movieName}</span> (
-                {review.movieYear})
-              </p>
-              <p
-                className={`text-xs italic ${
-                  review.rating === 10 ? "text-white" : "text-gray-500"
-                }`}
-              >
-                {review.user} -&nbsp;
-                {review.createdAt === review.updatedAt ? (
-                  new Date(review.createdAt)
-                    .toLocaleString("hr-HR")
-                    .substring(0, 19)
-                ) : (
-                  <span>
-                    Edited:{" "}
-                    {new Date(review.updatedAt)
-                      .toLocaleString("hr-HR")
-                      .substring(0, 19)}
-                  </span>
-                )}
-              </p>
-            </div>
-            {review.description && (
-              <p className="mt-2 text-sm hidden md:block break-all">
-                {review.description}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-      {review.description && (
-        <p className="text-sm p-4 pt-0 block md:hidden break-all">
-          {review.description}
-        </p>
-      )}
-    </div>
+    <ReviewCard review={review} isEditable={false} page="dashboard" />
   ));
 }
