@@ -46,6 +46,8 @@ export default function MovieDetails() {
     );
   }
 
+  console.log(movie);
+
   return (
     <>
       {isLoading ? (
@@ -53,20 +55,38 @@ export default function MovieDetails() {
       ) : (
         movie && (
           <>
+            <div className="md:hidden flex bg-white rounded-lg shadow mb-4 items-center">
+              <img
+                src={movie.Poster}
+                alt="poster"
+                className="rounded-l-lg w-36"
+              />
+              <div className="p-4">
+                <p className="text-xl">
+                  <span className="font-semibold">{movie.Title}</span> (
+                  {movie.Year})
+                </p>
+                <p className="text-sm">{movie.Genre}</p>
+                <p className="text-sm mb-4">{movie.Runtime}</p>
+              </div>
+            </div>
             <div className="flex flex-col sm:flex-row bg-white rounded-lg shadow mb-8">
               <img
                 src={movie.Poster}
                 alt="poster"
-                className="rounded-t-lg md:rounded-none md:rounded-l-lg mr-0 md:mr-1"
+                className="hidden md:block rounded-l-lg mr-1"
               />
               <div className="p-4 flex flex-col justify-between">
                 <div>
-                  <p className="text-xl md:text-2xl">
+                  <p className="text-xl md:text-2xl hidden md:block">
                     <span className="font-semibold">{movie.Title}</span> (
                     {movie.Year})
                   </p>
-                  <p className="text-sm">{movie.Genre}</p>
-                  <p className="text-sm mb-4">{movie.Runtime}</p>
+                  <p className="text-sm hidden md:block">{movie.Genre}</p>
+                  <p className="text-sm mb-4 hidden md:block">
+                    {movie.Runtime}
+                  </p>
+                  <p className="font-semibold md:hidden mb-1">Details</p>
                   <p className="text-sm">
                     <span className="font-semibold mr-1">Actors:</span>
                     {movie.Actors}
@@ -86,7 +106,7 @@ export default function MovieDetails() {
                   </p>
                 </div>
                 <div className="pb-1">
-                  <p className="font-semibold">Ratings:</p>
+                  <p className="font-semibold">Ratings</p>
                   <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-8">
                     <div className="flex items-center mt-2 md:mt-0">
                       <img src={burzum} alt="burzum" className="w-36" />

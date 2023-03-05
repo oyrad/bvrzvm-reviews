@@ -1,10 +1,6 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
-
-import { routes } from "../../api/paths";
 import ReactPaginate from "react-paginate";
-import { getColorFromRating } from "../../util/ratingsUtil";
 import { Spinner } from "../../components/Spinner";
 import ReviewCard from "../../components/ReviewCard";
 
