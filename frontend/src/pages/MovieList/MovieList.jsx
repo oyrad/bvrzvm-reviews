@@ -31,7 +31,7 @@ export default function MoviesList({ movies, error, setMovies, setError }) {
       {isLoading ? (
         <Spinner isLoading={isLoading} />
       ) : error ? (
-        <div className="bg-red-100 w-full p-3 rounded-lg -mt-2">
+        <div className="bg-red-100 w-full p-3 rounded-lg md:-mt-2">
           <p className="text-red-600">Error: {error}</p>
         </div>
       ) : (

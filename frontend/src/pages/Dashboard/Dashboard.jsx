@@ -35,7 +35,7 @@ export default function Dashboard() {
     <>
       {isLoading ? (
         <Spinner isLoading={isLoading} />
-      ) : (
+      ) : recentReviews.length > 0 ? (
         <>
           <div className="text-2xl font-semibold mb-4">Recent reviews</div>
           <Reviews recentReviews={currentItems} />
@@ -82,6 +82,8 @@ export default function Dashboard() {
             pageClassName="hover:text-gray-500"
           />
         </>
+      ) : (
+        <p>No reviews yet.</p>
       )}
     </>
   );
