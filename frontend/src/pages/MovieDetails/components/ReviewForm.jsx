@@ -19,7 +19,7 @@ export default function ReviewForm({
                 <input
                   type="number"
                   step="any"
-                  min="0"
+                  min="1"
                   max="10"
                   size="3"
                   name="rating"
