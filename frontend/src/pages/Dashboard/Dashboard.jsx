@@ -102,6 +102,11 @@ export default function Dashboard() {
 
 function Reviews({ recentReviews }) {
   return recentReviews.map((review) => (
-    <ReviewCard review={review} isEditable={false} page="dashboard" />
+    <ReviewCard
+      key={review._id}
+      review={review}
+      isEditable={false}
+      page="dashboard"
+    />
   ));
 }

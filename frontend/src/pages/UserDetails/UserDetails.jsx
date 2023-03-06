@@ -55,7 +55,12 @@ export default function UserDetails() {
             reviews={reviews}
             showRatings
           />
-          <p className="text-2xl font-semibold mb-4">Reviews</p>
+          <div className="text-2xl font-semibold mb-3">
+            {user.name.givenName}'s reviews
+            <span className="ml-2 bg-white rounded-full px-4 py-0.5 text-lg">
+              {reviews.length}
+            </span>
+          </div>
           {reviews.map((review) => (
             <div
               className={`bg-white rounded md:rounded-lg flex items-center mb-4 cursor-pointer shadow border-l-4 md:border-none ${

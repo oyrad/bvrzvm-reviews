@@ -83,7 +83,7 @@ export default function ReviewCard({
               <div className="flex items-center">
                 <p className="text-4xl mr-4 ml-1 md:hidden">{review.rating}</p>
                 <div>
-                  <p className="font-semibold text-lg md:text-xl mr-2">
+                  <div className="font-semibold text-lg md:text-xl mr-2">
                     {page === "dashboard" ? (
                       <p>
                         {review.movieName}
@@ -94,7 +94,7 @@ export default function ReviewCard({
                     ) : (
                       review.user
                     )}
-                  </p>
+                  </div>
                   <p
                     className={`text-xs italic ${
                       review.rating === 10 ? "text-white" : "text-gray-500"
