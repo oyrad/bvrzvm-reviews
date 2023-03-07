@@ -46,8 +46,6 @@ export default function MovieDetails() {
     );
   }
 
-  console.log(movie);
-
   return (
     <>
       {isLoading ? (

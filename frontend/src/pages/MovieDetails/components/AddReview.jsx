@@ -49,6 +49,7 @@ export default function AddReview({ movie, setReviews, setCurrentReview }) {
       setRating={setRating}
       description={description}
       setDescription={setDescription}
+      isCancelable={false}
     />
   );
 }

@@ -58,6 +58,8 @@ export default function EditReview({
       setRating={setRating}
       description={description}
       setDescription={setDescription}
+      isCancelable={true}
+      setIsEditModeOn={setIsEditModeOn}
     />
   );
 }
