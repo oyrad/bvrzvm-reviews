@@ -38,6 +38,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(errorHandler);
 
 app.use("/api/reviews", require("./routes/reviewRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 app.use("/auth", require("./routes/auth"));
 
 if (process.env.NODE_ENV === "production") {

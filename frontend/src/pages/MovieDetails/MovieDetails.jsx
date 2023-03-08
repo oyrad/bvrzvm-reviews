@@ -53,7 +53,7 @@ export default function MovieDetails() {
       ) : (
         movie && (
           <>
-            <div className="md:hidden flex bg-white rounded-lg shadow mb-4 items-center">
+            <div className="md:hidden flex bg-white rounded-lg shadow mb-4">
               <img
                 src={movie.Poster}
                 alt="poster"

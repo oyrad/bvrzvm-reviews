@@ -15,48 +15,35 @@ export default function UserDetails() {
   const [reviews, setReviews] = React.useState([]);
   const [userName, setUserName] = React.useState("");
   const [avatar, setAvatar] = React.useState("");
-  const [hasNoReviews, setHasNoReviews] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const { user } = React.useContext(UserContext);
-
   React.useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setUserName(data[0].name);
+        setAvatar(data[0].avatar);
+      });
+
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/user/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.length === 0) {
-          setHasNoReviews(true);
-        } else {
-          setReviews(data);
-          setUserName(data[0].user);
-          setAvatar(data[0].avatar);
-        }
+        setReviews(data);
       })
-      .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
+      .catch((err) => console.log(err));
+
+    setIsLoading(false);
   }, [id]);
 
   return (
     <>
       {isLoading ? (
         <Spinner isLoading={isLoading} />
-      ) : hasNoReviews ? (
-        <UserCard
-          avatar={user.photos[0].value}
-          name={user.displayName}
-          reviews={reviews}
-          showRatings={false}
-        />
       ) : (
         <>
-          <UserCard
-            avatar={avatar}
-            name={userName}
-            reviews={reviews}
-            showRatings
-          />
+          <UserCard avatar={avatar} name={userName} reviews={reviews} />
           <div className="text-2xl font-semibold mb-3">
-            {user.name.givenName}'s reviews
+            Reviews
             <span className="ml-2 bg-white rounded-full px-4 py-0.5 text-lg">
               {reviews.length}
             </span>
@@ -130,7 +117,7 @@ export default function UserDetails() {
   );
 }
 
-function UserCard({ avatar, name, reviews, showRatings }) {
+function UserCard({ avatar, name, reviews }) {
   return (
     <>
       <div className="md:hidden flex flex-col items-start mb-6 bg-white rounded-lg shadow">
@@ -143,13 +130,13 @@ function UserCard({ avatar, name, reviews, showRatings }) {
           />
           <div>
             <p className="text-xl font-semibold">{name}</p>
-            <p className="text-sm">
+            <p className="text-sm text-gray-700">
               Total reviews:
               <span className="font-medium ml-1">{reviews.length}</span>
             </p>
-            {showRatings && (
+            {reviews.length > 0 && (
               <>
-                <p className="text-sm">
+                <p className="text-sm text-gray-700">
                   Average rating:
                   <span className="font-medium ml-1">
                     {calculateRating(reviews)}
@@ -169,25 +156,25 @@ function UserCard({ avatar, name, reviews, showRatings }) {
         />
         <div className="flex flex-col p-4">
           <p className="text-xl font-semibold">{name}</p>
-          <p className="text-sm">
+          <p className="text-sm text-gray-700">
             Total reviews:
             <span className="font-medium ml-1">{reviews.length}</span>
           </p>
-          {showRatings && (
+          {reviews.length > 0 && (
             <>
-              <p className="text-sm">
+              <p className="text-sm text-gray-700">
                 Average rating:
                 <span className="font-medium ml-1">
                   {calculateRating(reviews)}
                 </span>
               </p>
-              <p className="text-sm">
+              <p className="text-sm text-gray-700">
                 Highest rated:
                 <span className="font-medium ml-1">
                   {findHighestRated(reviews)}
                 </span>
               </p>
-              <p className="text-sm">
+              <p className="text-sm text-gray-700">
                 Lowest rated:
                 <span className="font-medium ml-1">
                   {findLowestRated(reviews)}

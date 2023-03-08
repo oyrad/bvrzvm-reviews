@@ -10,7 +10,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.find({
-    userId: req.params.id,
+    userId: req.params.userId,
   });
 
   res.status(200).json(user);
