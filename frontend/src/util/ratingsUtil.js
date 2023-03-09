@@ -16,7 +16,7 @@ export function getColorFromRating(rating) {
   let color;
 
   if (rating === 10) {
-    color = "";
+    color = "#ffd700";
   } else if (rating >= 9) {
     color = "#0891b2";
   } else if (rating >= 8 && rating < 9) {

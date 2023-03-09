@@ -40,10 +40,7 @@ export default function ReviewCard({
         </div>
       )}
       <div
-        className={`rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none ${
-          review.rating === 10 &&
-          "gradient-border border-none bg-transparent pl-1 md:pl-0"
-        }`}
+        className="rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none"
         style={{ borderColor: getColorFromRating(review.rating) }}
         onClick={() => {
           if (page === "movie") {
@@ -56,9 +53,7 @@ export default function ReviewCard({
         <div className="flex justify-between items-center">
           <div className="flex">
             <div
-              className={`hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition ${
-                review.rating === 10 && "border-none"
-              }`}
+              className="hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition"
               style={{ borderColor: getColorFromRating(review.rating) }}
               onClick={(e) => {
                 e.stopPropagation();
@@ -75,11 +70,7 @@ export default function ReviewCard({
                 {review.rating}
               </p>
             </div>
-            <div
-              className={`flex flex-col p-4 justify-center ${
-                review.rating === 10 && "pl-5"
-              }`}
-            >
+            <div className="flex flex-col p-4 justify-center">
               <div className="flex items-center">
                 <p className="text-4xl mr-4 ml-1 md:hidden">{review.rating}</p>
                 <div>
@@ -95,11 +86,7 @@ export default function ReviewCard({
                       review.user
                     )}
                   </div>
-                  <p
-                    className={`text-xs italic ${
-                      review.rating === 10 ? "text-white" : "text-gray-500"
-                    }`}
-                  >
+                  <p className="text-xs italic text-gray-500">
                     {page === "dashboard" && `${review.user} - `}
                     {review.createdAt === review.updatedAt ? (
                       new Date(review.createdAt)
