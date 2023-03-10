@@ -52,7 +52,7 @@ export default function ReviewCard({
         <img
           src={page !== "movie" ? review.moviePoster : review.avatar}
           className={`hidden md:block rounded-l-lg hover:opacity-90 transition ${
-            page !== "movie" ? "w-32" : "w-44 lg:max-w-[8rem]"
+            page !== "movie" ? "w-28" : "w-44 lg:max-w-[8rem]"
           }`}
         />
         <div

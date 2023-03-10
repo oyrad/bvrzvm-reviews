@@ -11,7 +11,7 @@ export function calculateRating(reviews) {
 }
 
 export function formatRating(rating) {
-  if (rating.toString().includes(".") || rating === 10) {
+  if (rating.toString().includes(".") || rating === 10 || rating === "-") {
     return rating;
   } else {
     return `${rating}.0`;
@@ -21,9 +21,7 @@ export function formatRating(rating) {
 export function getColorFromRating(rating) {
   let color;
 
-  if (rating === 10) {
-    color = "#ffd700";
-  } else if (rating >= 9) {
+  if (rating >= 9) {
     color = "#0891b2";
   } else if (rating >= 8 && rating < 9) {
     color = "#16a34a";

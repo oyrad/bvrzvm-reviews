@@ -31,9 +31,8 @@ export default function UserDetails() {
       .then((data) => {
         setReviews(data);
       })
-      .catch((err) => console.log(err));
-
-    setIsLoading(false);
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }, [id]);
 
   return (

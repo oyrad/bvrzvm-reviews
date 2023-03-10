@@ -109,7 +109,9 @@ export default function MovieDetails() {
                     <div className="flex items-center mt-2 md:mt-0">
                       <img src={burzum} alt="burzum" className="w-32" />
                       <p className="ml-2 md:ml-4">
-                        {formatRating(calculateRating(reviews))}/10
+                        {formatRating(calculateRating(reviews)) !== "-"
+                          ? `${formatRating(calculateRating(reviews))}/10`
+                          : "-"}
                       </p>
                     </div>
                     <a
