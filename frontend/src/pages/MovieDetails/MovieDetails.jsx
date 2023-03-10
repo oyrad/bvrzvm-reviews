@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useParams } from "react-router-dom";
-import { calculateRating } from "../../util/ratingsUtil";
+import { calculateRating, formatRating } from "../../util/ratingsUtil";
 import AddReview from "./components/AddReview";
 import EditReview from "./components/EditReview";
 import ReviewList from "./components/ReviewList";
@@ -107,8 +107,10 @@ export default function MovieDetails() {
                   <p className="font-semibold">Ratings</p>
                   <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-8">
                     <div className="flex items-center mt-2 md:mt-0">
-                      <img src={burzum} alt="burzum" className="w-36" />
-                      <p className="ml-2 md:ml-4">{calculateRating(reviews)}</p>
+                      <img src={burzum} alt="burzum" className="w-32" />
+                      <p className="ml-2 md:ml-4">
+                        {formatRating(calculateRating(reviews))}/10
+                      </p>
                     </div>
                     <a
                       href={`https://www.imdb.com/title/${movie.imdbID}/`}
@@ -119,7 +121,7 @@ export default function MovieDetails() {
                       <img
                         src={imdb}
                         alt="logo"
-                        className="w-20 mr-2 md:mr-4"
+                        className="w-16 mr-2 md:mr-4"
                       />
                       <p>{movie.Ratings[0].Value}</p>
                     </a>

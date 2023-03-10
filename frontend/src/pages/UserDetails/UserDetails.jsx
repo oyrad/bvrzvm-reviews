@@ -2,11 +2,12 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { routes } from "../../api/paths";
-import { calculateRating } from "../../util/ratingsUtil";
+import { calculateRating, formatRating } from "../../util/ratingsUtil";
 import { findHighestRated, findLowestRated } from "../../util/findByRating";
 import { UserContext } from "../../UserContext";
 import { getColorFromRating } from "../../util/ratingsUtil";
 import { Spinner } from "../../components/Spinner";
+import ReviewCard from "../../components/ReviewCard";
 
 export default function UserDetails() {
   const { id } = useParams();
@@ -49,67 +50,12 @@ export default function UserDetails() {
             </span>
           </div>
           {reviews.map((review) => (
-            <div
-              className={`bg-white rounded md:rounded-lg flex items-center mb-4 cursor-pointer shadow border-l-4 md:border-none ${
-                review.rating === 10 &&
-                "gradient-border border-none bg-transparent pl-1 md:pl-0"
-              }`}
-              onClick={() => navigate(routes.MOVIE(review.movieId))}
-              style={{ borderColor: getColorFromRating(review.rating) }}
+            <ReviewCard
               key={review._id}
-            >
-              <div
-                className={`hidden md:block min-w-[8rem] max-w-[8rem] relative center text-white bg-black hover:bg-gray-700 transition rounded-l-lg border-r-4 ${
-                  review.rating === 10 && "border-none"
-                }`}
-                style={{ borderColor: getColorFromRating(review.rating) }}
-              >
-                <img
-                  src={review.moviePoster}
-                  alt="poster"
-                  className="rounded-l-lg opacity-60"
-                />
-                <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
-                  {review.rating}
-                </p>
-              </div>
-              <div className={`p-4 ${review.rating === 10 && "pl-5"}`}>
-                <div className="flex items-center">
-                  <p className="ml-1 mr-4 text-4xl md:hidden">
-                    {review.rating}
-                  </p>
-                  <div>
-                    <p className="text-xl">
-                      <span className="font-semibold">{review.movieName}</span>{" "}
-                      ({review.movieYear})
-                    </p>
-                    <p
-                      className={`text-xs italic ${
-                        review.rating === 10 ? "text-white" : "text-gray-500"
-                      }`}
-                    >
-                      {review.createdAt === review.updatedAt ? (
-                        new Date(review.createdAt)
-                          .toLocaleString("hr-HR")
-                          .substring(0, 19)
-                      ) : (
-                        <span>
-                          Edited:{" "}
-                          {new Date(review.updatedAt)
-                            .toLocaleString("hr-HR")
-                            .substring(0, 19)}
-                        </span>
-                      )}
-                    </p>
-                  </div>
-                </div>
-                {review.description && (
-                  <p className="mt-2 text-sm xl:pr-4  break-all">
-                    {review.description}
-                  </p>
-                )}
-              </div>
-            </div>
+              review={review}
+              isEditable={false}
+              page="user"
+            />
           ))}
         </>
       )}
@@ -130,16 +76,18 @@ function UserCard({ avatar, name, reviews }) {
           />
           <div>
             <p className="text-xl font-semibold">{name}</p>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-600">
               Total reviews:
-              <span className="font-medium ml-1">{reviews.length}</span>
+              <span className="font-medium ml-1 text-black">
+                {reviews.length}
+              </span>
             </p>
             {reviews.length > 0 && (
               <>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-600">
                   Average rating:
-                  <span className="font-medium ml-1">
-                    {calculateRating(reviews)}
+                  <span className="font-medium ml-1 text-black">
+                    {formatRating(calculateRating(reviews))}
                   </span>
                 </p>
               </>
@@ -156,27 +104,29 @@ function UserCard({ avatar, name, reviews }) {
         />
         <div className="flex flex-col p-4">
           <p className="text-xl font-semibold">{name}</p>
-          <p className="text-sm text-gray-700">
+          <p className="text-sm text-gray-600">
             Total reviews:
-            <span className="font-medium ml-1">{reviews.length}</span>
+            <span className="font-medium ml-1 text-black">
+              {reviews.length}
+            </span>
           </p>
           {reviews.length > 0 && (
             <>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-600">
                 Average rating:
-                <span className="font-medium ml-1">
-                  {calculateRating(reviews)}
+                <span className="font-medium ml-1 text-black">
+                  {formatRating(calculateRating(reviews))}
                 </span>
               </p>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-600">
                 Highest rated:
-                <span className="font-medium ml-1">
+                <span className="font-medium ml-1 text-black">
                   {findHighestRated(reviews)}
                 </span>
               </p>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-600">
                 Lowest rated:
-                <span className="font-medium ml-1">
+                <span className="font-medium ml-1 text-black">
                   {findLowestRated(reviews)}
                 </span>
               </p>

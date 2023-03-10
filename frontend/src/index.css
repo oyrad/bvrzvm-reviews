@@ -58,45 +58,6 @@ input::-webkit-inner-spin-button {
   text-shadow: 2px 2px 4px #000;
 }
 
-.gradient-border {
-  --border-width: 0px;
-  position: relative;
-  border-radius: 8px;
-  color: white;
-  text-shadow: 0.5px 0.5px 1.5px #000;
-}
-
-.gradient-border::after {
-  position: absolute;
-  content: "";
-  opacity: 0.8;
-  top: var(--border-width);
-  left: var(--border-width);
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    60deg,
-    hsl(224, 90%, 66%),
-    hsl(269, 90%, 66%),
-    hsl(314, 90%, 66%),
-    hsl(359, 90%, 66%),
-    hsl(44, 90%, 66%),
-    hsl(89, 90%, 66%),
-    hsl(134, 90%, 66%)
-  );
-  background-size: 250% 250%;
-  background-position: 0 50%;
-  border-radius: 8px;
-  animation: moveGradient 6s alternate infinite;
-}
-
-@keyframes moveGradient {
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 @media (max-width: 640px) {
   .btn {
     padding: 2px 16px;

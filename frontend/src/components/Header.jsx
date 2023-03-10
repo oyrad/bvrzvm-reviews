@@ -69,7 +69,7 @@ export default function Header({ setMovies, setError, query, setQuery }) {
               <img
                 src={user.photos[0].value}
                 alt="avatar"
-                className="w-10 mr-4 sm:mr-2 rounded-full"
+                className="w-9 mr-4 sm:mr-2 rounded-full"
               />
               <p className="mr-4 lg:mr-8 hidden md:block">{user.displayName}</p>
             </div>

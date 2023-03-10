@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getColorFromRating } from "../util/ratingsUtil";
+import { getColorFromRating, formatRating } from "../util/ratingsUtil";
 
 import { routes } from "../api/paths";
 
@@ -40,82 +40,58 @@ export default function ReviewCard({
         </div>
       )}
       <div
-        className="rounded md:rounded-lg shadow bg-white flex flex-col mb-4 cursor-pointer border-l-4 md:border-none"
-        style={{ borderColor: getColorFromRating(review.rating) }}
+        className="rounded md:rounded-lg shadow bg-white flex mb-4 cursor-pointer md:border-none"
         onClick={() => {
-          if (page === "movie") {
-            navigate(routes.USER(review.userId));
-          } else {
+          if (page !== "movie") {
             navigate(routes.MOVIE(review.movieId));
+          } else {
+            navigate(routes.USER(review.userId));
           }
         }}
       >
-        <div className="flex justify-between items-center">
-          <div className="flex">
-            <div
-              className="hidden md:block md:relative center text-white bg-black hover:bg-gray-600 md:rounded-l-lg border-r-4 transition"
-              style={{ borderColor: getColorFromRating(review.rating) }}
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(routes.USER(review.userId));
-              }}
-            >
-              <img
-                src={review.avatar}
-                alt="avatar"
-                className="w-36 lg:w-32 max-w-[10rem] rounded-l-lg opacity-70"
-                referrerPolicy="no-referrer"
-              />
-              <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl text-shadow">
-                {review.rating}
+        <img
+          src={page !== "movie" ? review.moviePoster : review.avatar}
+          className={`hidden md:block rounded-l-lg hover:opacity-90 transition ${
+            page !== "movie" ? "w-32" : "w-44 lg:max-w-[8rem]"
+          }`}
+        />
+        <div
+          className="p-4 border-l-4 w-full flex justify-between"
+          style={{ borderColor: getColorFromRating(review.rating) }}
+        >
+          <div className="w-full">
+            <div className="flex justify-between">
+              <div>
+                <p className="text-xl font-semibold">
+                  {page !== "movie"
+                    ? `${review.movieName} (${review.movieYear})`
+                    : review.user}
+                </p>
+                <p className="text-gray-700 italic text-xs">
+                  {page === "dashboard" && `${review.user} - `}
+                  {review.createdAt === review.updatedAt ? (
+                    new Date(review.createdAt)
+                      .toLocaleString("hr-HR")
+                      .substring(0, 19)
+                  ) : (
+                    <span>
+                      Edited:{" "}
+                      {new Date(review.updatedAt)
+                        .toLocaleString("hr-HR")
+                        .substring(0, 19)}
+                    </span>
+                  )}
+                </p>
+              </div>
+              <p className="font-bold text-xl pl-8 md:pr-1">
+                {formatRating(review.rating)}
               </p>
             </div>
-            <div className="flex flex-col p-4 justify-center">
-              <div className="flex items-center">
-                <p className="text-4xl mr-4 ml-1 md:hidden">{review.rating}</p>
-                <div>
-                  <div className="font-semibold text-lg md:text-xl mr-2">
-                    {page === "dashboard" ? (
-                      <p>
-                        {review.movieName}
-                        <span className="font-normal ml-1.5">
-                          ({review.movieYear})
-                        </span>
-                      </p>
-                    ) : (
-                      review.user
-                    )}
-                  </div>
-                  <p className="text-xs italic text-gray-500">
-                    {page === "dashboard" && `${review.user} - `}
-                    {review.createdAt === review.updatedAt ? (
-                      new Date(review.createdAt)
-                        .toLocaleString("hr-HR")
-                        .substring(0, 19)
-                    ) : (
-                      <span>
-                        Edited:{" "}
-                        {new Date(review.updatedAt)
-                          .toLocaleString("hr-HR")
-                          .substring(0, 19)}
-                      </span>
-                    )}
-                  </p>
-                </div>
-              </div>
-              {review.description && (
-                <p className="mt-2 text-sm hidden md:block break-all">
-                  {review.description}
-                </p>
-              )}
-            </div>
+            {review.description && (
+              <p className="text-sm mt-2">{review.description}</p>
+            )}
           </div>
         </div>
-        {review.description && (
-          <p className="text-sm p-4 pt-0 block md:hidden break-all">
-            {review.description}
-          </p>
-        )}
       </div>
     </>
   );

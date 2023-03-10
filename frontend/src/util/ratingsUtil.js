@@ -4,12 +4,18 @@ export function calculateRating(reviews) {
     reviews.forEach((rev) => (rating = rating + parseFloat(rev.rating)));
     rating = Math.round((rating / reviews.length) * 10) / 10;
 
-    rating = `${rating}/10`;
+    return rating;
   } else {
-    rating = "-";
+    return "-";
   }
+}
 
-  return rating;
+export function formatRating(rating) {
+  if (rating.toString().includes(".") || rating === 10) {
+    return rating;
+  } else {
+    return `${rating}.0`;
+  }
 }
 
 export function getColorFromRating(rating) {
