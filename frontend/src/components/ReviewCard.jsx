@@ -56,7 +56,7 @@ export default function ReviewCard({
           }`}
         />
         <div
-          className="p-4 border-l-4 w-full flex justify-between"
+          className="p-4 border-l-4 w-full flex justify-between rounded md:rounded-none"
           style={{ borderColor: getColorFromRating(review.rating) }}
         >
           <div className="w-full">
