@@ -1,17 +1,13 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { routes } from "../../api/paths";
 import { calculateRating, formatRating } from "../../util/ratingsUtil";
 import { findHighestRated, findLowestRated } from "../../util/findByRating";
-import { UserContext } from "../../UserContext";
-import { getColorFromRating } from "../../util/ratingsUtil";
 import { Spinner } from "../../components/Spinner";
 import ReviewCard from "../../components/ReviewCard";
 
 export default function UserDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [reviews, setReviews] = React.useState([]);
   const [userName, setUserName] = React.useState("");
@@ -34,6 +30,8 @@ export default function UserDetails() {
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   }, [id]);
+
+  console.log(id);
 
   return (
     <>

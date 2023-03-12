@@ -92,7 +92,7 @@ export default function Dashboard() {
               )}
             </>
           ) : (
-            <div className="text-xl mb-8 bg-white px-4 py-3 rounded-xl">
+            <div className="text-lg mb-8 bg-white px-4 py-3 rounded-xl">
               No recent reviews.
             </div>
           )}

@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getColorFromRating, formatRating } from "../util/ratingsUtil";
-
 import { routes } from "../api/paths";
 
 export default function ReviewCard({
@@ -20,6 +19,8 @@ export default function ReviewCard({
     });
     refreshReviews();
   }
+
+  console.log(review.userId);
 
   return (
     <>
@@ -54,6 +55,7 @@ export default function ReviewCard({
           className={`hidden md:block rounded-l-lg hover:opacity-90 transition ${
             page !== "movie" ? "w-28" : "w-44 lg:max-w-[8rem]"
           }`}
+          alt="poster"
         />
         <div
           className="p-4 border-l-4 w-full flex justify-between rounded md:rounded-none"
