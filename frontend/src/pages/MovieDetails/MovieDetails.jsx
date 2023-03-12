@@ -164,7 +164,9 @@ export default function MovieDetails() {
                 />
               )
             ) : (
-              <p className="text-xl mb-8">Log in to write a review.</p>
+              <div className="text-xl mb-8 bg-white px-4 py-3 rounded-xl">
+                Log in to write a review.
+              </div>
             )}
             <ReviewList reviews={reviews} />
           </>

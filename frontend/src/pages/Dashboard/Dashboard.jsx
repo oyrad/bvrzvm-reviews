@@ -92,7 +92,9 @@ export default function Dashboard() {
               )}
             </>
           ) : (
-            <p>No recent reviews.</p>
+            <div className="text-xl mb-8 bg-white px-4 py-3 rounded-xl">
+              No recent reviews.
+            </div>
           )}
         </>
       )}
