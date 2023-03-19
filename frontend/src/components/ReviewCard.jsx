@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import { getColorFromRating, formatRating } from "../util/ratingsUtil";
 import { routes } from "../api/paths";
+import LikeButton from "./LikeButton";
+import DislikeButton from "./DislikeButton";
+import { UserContext } from "../UserContext";
 
 export default function ReviewCard({
   review,
@@ -11,7 +14,12 @@ export default function ReviewCard({
   setIsEditModeOn,
   page,
 }) {
+  const { user } = React.useContext(UserContext);
   const navigate = useNavigate();
+  const [likes, setLikes] = React.useState(review.likes);
+  const [dislikes, setDislikes] = React.useState(review.dislikes);
+
+  console.log("likes length", likes.length);
 
   function handleDelete() {
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${review._id}`, {
@@ -20,7 +28,67 @@ export default function ReviewCard({
     refreshReviews();
   }
 
-  console.log(review.userId);
+  function handleLikeClick() {
+    if (user.id === undefined) return;
+    if (parseInt(user.id) === review.userId) return;
+
+    const updatedReview = review;
+    if (review.dislikes.includes(parseInt(user.id))) {
+      const currentIds = review.dislikes;
+      const userIdIndex = currentIds.indexOf(parseInt(user.id));
+      updatedReview.dislikes = currentIds.splice(userIdIndex, 1);
+    }
+    if (likes.includes(parseInt(user.id))) {
+      const currentIds = review.likes;
+      const userIdIndex = currentIds.indexOf(parseInt(user.id));
+      currentIds.splice(userIdIndex, 1);
+      updatedReview.likes = currentIds;
+
+      const currentFrontIds = likes;
+      const userIdFrontIndex = currentFrontIds.indexOf(parseInt(user.id));
+      currentFrontIds.splice(userIdFrontIndex, 1);
+      setLikes(currentFrontIds);
+    } else {
+      updatedReview.likes = [...review.likes, user.id];
+      setLikes((prevLikes) => [...prevLikes, parseInt(user.id)]);
+    }
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${review._id}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedReview),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  function handleDislikeClick() {
+    if (user.id === undefined) return;
+    if (parseInt(user.id) === review.userId) return;
+
+    const updatedReview = review;
+    if (review.likes.includes(parseInt(user.id))) {
+      const currentIds = review.likes;
+      const userIdIndex = currentIds.indexOf(parseInt(user.id));
+      currentIds.splice(userIdIndex, 1);
+      updatedReview.likes = currentIds;
+    }
+    if (review.dislikes.includes(parseInt(user.id))) {
+      const currentIds = review.dislikes;
+      const userIdIndex = currentIds.indexOf(parseInt(user.id));
+      currentIds.splice(userIdIndex, 1);
+      updatedReview.dislikes = currentIds;
+    } else {
+      updatedReview.dislikes = [...review.dislikes, user.id];
+      setDislikes((prevDislikes) => [...prevDislikes, parseInt(user.id)]);
+    }
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${review._id}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedReview),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 
   return (
     <>
@@ -92,6 +160,40 @@ export default function ReviewCard({
             {review.description && (
               <p className="text-sm mt-2">{review.description}</p>
             )}
+            <div
+              className="flex items-center space-x-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p
+                className={`${
+                  likes.length > 0 ? "text-green-600" : "text-gray-400"
+                }`}
+              >
+                likes length: {likes.length}
+              </p>
+              <LikeButton
+                onClick={handleLikeClick}
+                disabled={
+                  user.id === undefined || parseInt(user.id) === review.userId
+                }
+                isSelected={likes.includes(parseInt(user.id))}
+              />
+              <p
+                className={`pl-2 ${
+                  dislikes.length > 0 ? "text-red-600" : "text-gray-400"
+                }`}
+              >
+                {dislikes.length}
+              </p>
+              <DislikeButton
+                review={review}
+                onClick={handleDislikeClick}
+                disabled={
+                  user.id === undefined || parseInt(user.id) === review.userId
+                }
+                dislikes={dislikes}
+              />
+            </div>
           </div>
         </div>
       </div>

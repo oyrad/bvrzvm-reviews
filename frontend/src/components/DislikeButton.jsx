@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { UserContext } from "../UserContext";
 
-export default function DislikeButton({ review, onClick, disabled }) {
+export default function DislikeButton({ review, onClick, disabled, dislikes }) {
   const { user } = useContext(UserContext);
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill={review.dislikes.includes(parseInt(user.id)) ? "#dc2626" : "none"}
+      fill={dislikes.includes(parseInt(user.id)) ? "#dc2626" : "none"}
       viewBox="0 0 24 24"
-      strokeWidth={review.dislikes.includes(parseInt(user.id)) ? 0 : 1.5}
+      strokeWidth={dislikes.includes(parseInt(user.id)) ? 0 : 1.5}
       stroke={disabled ? "#bbb" : "currentColor"}
       className="w-6 h-6"
       onClick={onClick}

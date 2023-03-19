@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
-import { UserContext } from "../UserContext";
+import React from "react";
 
-export default function LikeButton({ review, onClick, disabled }) {
-  const { user } = useContext(UserContext);
+export default function LikeButton({ onClick, disabled, isSelected }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill={review.likes.includes(parseInt(user.id)) ? "#16a34a" : "none"}
+      fill={isSelected ? "#16a34a" : "none"}
       viewBox="0 0 24 24"
-      strokeWidth={review.likes.includes(parseInt(user.id)) ? 0 : 1.5}
+      strokeWidth={isSelected ? 0 : 1.5}
       stroke={disabled ? "#bbb" : "currentColor"}
       className="w-6 h-6"
       onClick={onClick}
