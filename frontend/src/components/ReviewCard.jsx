@@ -30,6 +30,7 @@ export default function ReviewCard({
   function handleLikeClick() {
     if (user.id === undefined) return;
     if (parseInt(user.id) === review.userId) return;
+    if (review.disableInteraction) return;
 
     const updatedReview = review;
     if (dislikes.includes(parseInt(user.id))) {
@@ -71,6 +72,7 @@ export default function ReviewCard({
   function handleDislikeClick() {
     if (user.id === undefined) return;
     if (parseInt(user.id) === review.userId) return;
+    if (review.disableInteraction) return;
 
     const updatedReview = review;
     if (likes.includes(parseInt(user.id))) {
@@ -199,7 +201,9 @@ export default function ReviewCard({
               <LikeButton
                 onClick={handleLikeClick}
                 disabled={
-                  user.id === undefined || parseInt(user.id) === review.userId
+                  user.id === undefined ||
+                  parseInt(user.id) === review.userId ||
+                  review.disableInteraction
                 }
                 isSelected={likes.includes(parseInt(user.id))}
               />
@@ -217,7 +221,9 @@ export default function ReviewCard({
               <DislikeButton
                 onClick={handleDislikeClick}
                 disabled={
-                  user.id === undefined || parseInt(user.id) === review.userId
+                  user.id === undefined ||
+                  parseInt(user.id) === review.userId ||
+                  review.disableInteraction
                 }
                 isSelected={dislikes.includes(parseInt(user.id))}
               />

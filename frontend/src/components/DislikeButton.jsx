@@ -1,8 +1,6 @@
-import React, { useContext } from "react";
-import { UserContext } from "../UserContext";
+import React from "react";
 
 export default function DislikeButton({ onClick, disabled, isSelected }) {
-  const { user } = useContext(UserContext);
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

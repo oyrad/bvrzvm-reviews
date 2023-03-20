@@ -37,6 +37,7 @@ export default function AddReview({ movie, setReviews, setCurrentReview }) {
       ...newReview,
       createdAt: currentDate,
       updatedAt: currentDate,
+      disableInteraction: true,
     };
     setCurrentReview(newReviewForDisplay);
     setReviews((prevReviews) => [newReviewForDisplay, ...prevReviews]);
