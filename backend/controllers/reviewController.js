@@ -24,16 +24,28 @@ const postReview = asyncHandler(async (req, res) => {
     moviePoster: req.body.moviePoster,
     rating: req.body.rating,
     description: req.body.description,
+    likes: req.body.likes,
+    dislikes: req.body.dislikes,
   });
 
   res.status(200).json(review);
 });
 
 const updateReview = asyncHandler(async (req, res) => {
+  const currentReview = await Review.findById(req.body._id);
+
+  let areRatingsChanged = false;
+  if (
+    currentReview.likes.length !== req.body.likes.length ||
+    currentReview.dislikes.length !== req.body.dislikes.length
+  ) {
+    areRatingsChanged = true;
+  }
+
   const updatedReview = await Review.findByIdAndUpdate(
     req.params.id,
     req.body,
-    { new: true }
+    { new: true, timestamps: !areRatingsChanged }
   );
 
   res.status(200).json(updatedReview);

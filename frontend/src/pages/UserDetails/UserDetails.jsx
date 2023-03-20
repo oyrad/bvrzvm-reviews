@@ -31,8 +31,6 @@ export default function UserDetails() {
       .finally(() => setIsLoading(false));
   }, [id]);
 
-  console.log(id);
-
   return (
     <>
       {isLoading ? (

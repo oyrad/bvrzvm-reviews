@@ -57,7 +57,7 @@ export default function App() {
           setQuery={setQuery}
           className="sm:hidden w-full px-4 mb-4"
         />
-        <div className="2xl:px-72 xl:px-48 lg:px-28 md:px-8 px-4">
+        <div className="2xl:px-72 xl:px-48 lg:px-16 md:px-8 px-4">
           <Routes>
             <Route path={routes.DASHBOARD} element={<Dashboard />} />
             <Route

@@ -6,8 +6,8 @@ export default function LikeButton({ onClick, disabled, isSelected }) {
       xmlns="http://www.w3.org/2000/svg"
       fill={isSelected ? "#16a34a" : "none"}
       viewBox="0 0 24 24"
-      strokeWidth={isSelected ? 0 : 1.5}
-      stroke={disabled ? "#bbb" : "currentColor"}
+      strokeWidth={isSelected ? 0 : 1.3}
+      stroke={disabled ? "#bbb" : "#374151"}
       className="w-6 h-6"
       onClick={onClick}
     >
