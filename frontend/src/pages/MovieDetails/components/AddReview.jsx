@@ -22,6 +22,8 @@ export default function AddReview({ movie, setReviews, setCurrentReview }) {
       moviePoster: movie.Poster,
       rating: Math.round(rating * 10) / 10,
       description: description,
+      likes: [],
+      dislikes: [],
     };
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews`, {
       method: "POST",
@@ -35,6 +37,7 @@ export default function AddReview({ movie, setReviews, setCurrentReview }) {
       ...newReview,
       createdAt: currentDate,
       updatedAt: currentDate,
+      disableInteraction: true,
     };
     setCurrentReview(newReviewForDisplay);
     setReviews((prevReviews) => [newReviewForDisplay, ...prevReviews]);

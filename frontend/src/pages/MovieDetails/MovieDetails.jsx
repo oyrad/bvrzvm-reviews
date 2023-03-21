@@ -29,13 +29,15 @@ export default function MovieDetails() {
       .then((res) => res.json())
       .then((data) => setMovie(data));
 
+    if (user.id) {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${user.id}/${id}`)
+        .then((res) => res.json())
+        .then((data) => setReviewByCurrentUser(data[0]));
+    }
+
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${id}`)
       .then((res) => res.json())
-      .then((data) => setReviews(data));
-
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${user.id}/${id}`)
-      .then((res) => res.json())
-      .then((data) => setReviewByCurrentUser(data[0]))
+      .then((data) => setReviews(data))
       .finally(() => setIsLoading(false));
   }, [user, id]);
 
