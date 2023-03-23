@@ -57,7 +57,7 @@ export default function ReviewCard({
         return currentFrontIds;
       });
     } else {
-      updatedReview.likes = [...review.likes, user.id];
+      updatedReview.likes = [...review.likes, parseInt(user.id)];
       setLikes((prevLikes) => [...prevLikes, parseInt(user.id)]);
     }
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${review._id}`, {
@@ -99,7 +99,7 @@ export default function ReviewCard({
         return currentFrontIds;
       });
     } else {
-      updatedReview.dislikes = [...review.dislikes, user.id];
+      updatedReview.dislikes = [...review.dislikes, parseInt(user.id)];
       setDislikes((prevDislikes) => [...prevDislikes, parseInt(user.id)]);
     }
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/reviews/${review._id}`, {
