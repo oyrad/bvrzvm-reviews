@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { routes } from "../api/paths";
 
 export default function Search({
@@ -11,17 +11,17 @@ export default function Search({
   className,
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [previousQuery, setPreviousQuery] = React.useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!query) return;
-    if (query !== previousQuery) {
-      setMovies([]);
-      setError(undefined);
-      setPreviousQuery(query);
-      navigate(routes.SEARCH(query));
-    }
+    if (query === previousQuery && location.pathname.includes("search")) return;
+    setMovies([]);
+    setError(undefined);
+    setPreviousQuery(query);
+    navigate(routes.SEARCH(query));
   }
 
   return (
