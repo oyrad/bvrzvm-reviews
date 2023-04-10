@@ -39,7 +39,7 @@ export default function Dashboard() {
       ) : (
         <>
           <div className="text-2xl font-semibold mb-3">
-            Recent reviews
+            All reviews
             <span className="ml-2 bg-white rounded-full px-4 py-0.5 text-lg">
               {recentReviews.length}
             </span>
