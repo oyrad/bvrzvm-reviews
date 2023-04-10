@@ -29,6 +29,7 @@ export default function Dashboard() {
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % recentReviews.length;
     setItemOffset(newOffset);
+    window.scrollTo(0, 0);
   };
 
   return (
