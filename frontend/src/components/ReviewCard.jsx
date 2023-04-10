@@ -6,6 +6,7 @@ import { routes } from "../api/paths";
 import LikeButton from "./LikeButton";
 import DislikeButton from "./DislikeButton";
 import { UserContext } from "../UserContext";
+import { formatUrls } from "../util/formatUrls";
 
 export default function ReviewCard({
   review,
@@ -159,7 +160,7 @@ export default function ReviewCard({
                       ? `${review.movieName} (${review.movieYear})`
                       : review.user}
                   </p>
-                  <p className="text-gray-700 italic text-xs">
+                  <p className="text-gray-400 italic text-xs">
                     {page === "dashboard" && `${review.user} - `}
                     {review.createdAt === review.updatedAt ? (
                       new Date(review.createdAt)
@@ -180,7 +181,13 @@ export default function ReviewCard({
                 </p>
               </div>
               {review.description && (
-                <p className="text-sm mt-2">{review.description}</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: formatUrls(review.description),
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-sm mt-2"
+                />
               )}
             </div>
             <div
