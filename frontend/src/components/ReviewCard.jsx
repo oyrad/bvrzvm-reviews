@@ -35,28 +35,10 @@ export default function ReviewCard({
 
     const updatedReview = review;
     if (dislikes.includes(parseInt(user.id))) {
-      const currentIds = [...review.dislikes];
-      const userIdIndex = currentIds.indexOf(parseInt(user.id));
-      currentIds.splice(userIdIndex, 1);
-      updatedReview.dislikes = currentIds;
-      setDislikes((prevDislikes) => {
-        const currentFrontIds = [...prevDislikes];
-        const userIdFrontIndex = currentFrontIds.indexOf(parseInt(user.id));
-        currentFrontIds.splice(userIdFrontIndex, 1);
-        return currentFrontIds;
-      });
+      handleDislikeRemoval(updatedReview);
     }
     if (likes.includes(parseInt(user.id))) {
-      const currentIds = [...review.likes];
-      const userIdIndex = currentIds.indexOf(parseInt(user.id));
-      currentIds.splice(userIdIndex, 1);
-      updatedReview.likes = currentIds;
-      setLikes((prevLikes) => {
-        const currentFrontIds = [...prevLikes];
-        const userIdFrontIndex = currentFrontIds.indexOf(parseInt(user.id));
-        currentFrontIds.splice(userIdFrontIndex, 1);
-        return currentFrontIds;
-      });
+      handleLikeRemoval(updatedReview);
     } else {
       updatedReview.likes = [...review.likes, parseInt(user.id)];
       setLikes((prevLikes) => [...prevLikes, parseInt(user.id)]);
@@ -77,28 +59,10 @@ export default function ReviewCard({
 
     const updatedReview = review;
     if (likes.includes(parseInt(user.id))) {
-      const currentIds = [...review.likes];
-      const userIdIndex = currentIds.indexOf(parseInt(user.id));
-      currentIds.splice(userIdIndex, 1);
-      updatedReview.likes = currentIds;
-      setLikes((prevLikes) => {
-        const currentFrontIds = [...prevLikes];
-        const userIdFrontIndex = currentFrontIds.indexOf(parseInt(user.id));
-        currentFrontIds.splice(userIdFrontIndex, 1);
-        return currentFrontIds;
-      });
+      handleLikeRemoval(updatedReview);
     }
     if (dislikes.includes(parseInt(user.id))) {
-      const currentIds = [...review.dislikes];
-      const userIdIndex = currentIds.indexOf(parseInt(user.id));
-      currentIds.splice(userIdIndex, 1);
-      updatedReview.dislikes = currentIds;
-      setDislikes((prevDislikes) => {
-        const currentFrontIds = [...prevDislikes];
-        const userIdFrontIndex = currentFrontIds.indexOf(parseInt(user.id));
-        currentFrontIds.splice(userIdFrontIndex, 1);
-        return currentFrontIds;
-      });
+      handleDislikeRemoval(updatedReview);
     } else {
       updatedReview.dislikes = [...review.dislikes, parseInt(user.id)];
       setDislikes((prevDislikes) => [...prevDislikes, parseInt(user.id)]);
@@ -109,6 +73,32 @@ export default function ReviewCard({
       headers: {
         "Content-Type": "application/json",
       },
+    });
+  }
+
+  function handleLikeRemoval(updatedReview) {
+    const currentIds = [...review.likes];
+    const userIdIndex = currentIds.indexOf(parseInt(user.id));
+    currentIds.splice(userIdIndex, 1);
+    updatedReview.likes = currentIds;
+    setLikes((prevLikes) => {
+      const currentFrontIds = [...prevLikes];
+      const userIdFrontIndex = currentFrontIds.indexOf(parseInt(user.id));
+      currentFrontIds.splice(userIdFrontIndex, 1);
+      return currentFrontIds;
+    });
+  }
+
+  function handleDislikeRemoval(updatedReview) {
+    const currentIds = [...review.dislikes];
+    const userIdIndex = currentIds.indexOf(parseInt(user.id));
+    currentIds.splice(userIdIndex, 1);
+    updatedReview.dislikes = currentIds;
+    setDislikes((prevDislikes) => {
+      const currentFrontIds = [...prevDislikes];
+      const userIdFrontIndex = currentFrontIds.indexOf(parseInt(user.id));
+      currentFrontIds.splice(userIdFrontIndex, 1);
+      return currentFrontIds;
     });
   }
 
