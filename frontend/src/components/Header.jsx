@@ -36,12 +36,12 @@ export default function Header({ setMovies, setError, query, setQuery }) {
 
   return (
     <header
-      className={`2xl:px-72 xl:px-48 lg:px-28 md:px-8 px-4 flex justify-between items-center py-3 md:py-4 mb-4 sm:mb-8 sticky top-0 z-50 w-full bg-white ${
+      className={`2xl:px-72 xl:px-48 lg:px-16 md:px-8 px-4 flex justify-between items-center py-3 md:py-4 mb-4 sm:mb-8 sticky top-0 z-50 w-full bg-white ${
         isScrolled && "shadow-lg"
       }`}
     >
       <div
-        className="flex flex-col lg:flex-row items-end cursor-pointer mt-1 lg:mt-0"
+        className="flex flex-col items-end mt-1 cursor-pointer lg:flex-row lg:mt-0"
         onClick={() => {
           setQuery("");
           navigate(routes.DASHBOARD);
@@ -58,7 +58,7 @@ export default function Header({ setMovies, setError, query, setQuery }) {
           setError={setError}
           query={query}
           setQuery={setQuery}
-          className="hidden sm:block mr-4 lg:mr-8"
+          className="hidden mr-4 sm:block lg:mr-8"
         />
         {user.displayName ? (
           <>
@@ -69,9 +69,9 @@ export default function Header({ setMovies, setError, query, setQuery }) {
               <img
                 src={user.photos[0].value}
                 alt="avatar"
-                className="w-9 mr-4 sm:mr-2 rounded-full"
+                className="mr-4 rounded-full w-9 sm:mr-2"
               />
-              <p className="mr-4 lg:mr-8 hidden md:block">{user.displayName}</p>
+              <p className="hidden mr-4 lg:mr-8 md:block">{user.displayName}</p>
             </div>
             <button
               onClick={logout}

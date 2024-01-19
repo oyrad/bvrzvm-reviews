@@ -33,7 +33,7 @@ export default function Search({
           type="text"
           autoComplete="off"
           placeholder="Search for movies..."
-          className="border w-full rounded-full px-4 py-1.5 mr-2 outline-0"
+          className="border w-full rounded-full pl-4 py-1.5 mr-2 outline-0 pr-8"
           onChange={(e) => setQuery(e.target.value)}
         />
         <svg
@@ -42,7 +42,7 @@ export default function Search({
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-5 h-5 -ml-10 cursor-pointer text-gray-600"
+          className="w-5 h-5 -ml-10 text-gray-600 cursor-pointer"
           onClick={handleSubmit}
         >
           <path
